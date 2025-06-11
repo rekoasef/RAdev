@@ -2,14 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { titleVariants } from '@/utils/animations';
-// NUEVO: Importamos los iconos que vamos a usar
 import { Target, FileEdit } from 'lucide-react';
 
-// MODIFICADO: El componente ServiceCard ahora acepta un 'icon'
 const ServiceCard = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => (
-  // Añadimos 'group' para que el hover sobre la tarjeta afecte al icono
-  <div className="group bg-brand-surface p-8 rounded-lg shadow-lg h-full transition-all duration-300 hover:!shadow-2xl hover:shadow-brand-accent/10 hover:-translate-y-2">
-    {/* NUEVO: Contenedor del icono */}
+  <div className="group bg-brand-surface p-8 rounded-lg shadow-lg h-full transition-all duration-300 hover:shadow-2xl hover:shadow-brand-accent/10 hover:-translate-y-2">
     <div className="text-brand-accent mb-4 transition-transform duration-300 group-hover:scale-110">
       {icon}
     </div>
@@ -19,19 +15,21 @@ const ServiceCard = ({ icon, title, description }: { icon: React.ReactNode; titl
 );
 
 const ServicesSection = () => {
-  // NUEVO: Definimos las animaciones de entrada lateral personalizadas
-  const slideInLeft = {
-    hidden: { x: -100, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
-  };
-
-  const slideInRight = {
-    hidden: { x: 100, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+  // NUEVO: Una sola animación de "fade in y slide up" que se verá bien en móvil y en desktop.
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut" 
+      } 
+    },
   };
 
   return (
-    <section className="bg-brand-dark py-20 overflow-x-hidden"> {/* Añadimos overflow-x-hidden para que no se vean las tarjetas antes de entrar */}
+    <section className="bg-brand-dark py-20 overflow-x-hidden">
       <div className="container mx-auto px-6">
         <motion.h2 
           variants={titleVariants}
@@ -43,29 +41,28 @@ const ServicesSection = () => {
           Soluciones a tu Medida
         </motion.h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* MODIFICADO: Aplicamos la animación de entrada desde la izquierda */}
+          {/* Se aplica la misma animación a ambas tarjetas para un efecto más limpio */}
           <motion.div
-            variants={slideInLeft}
+            variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
           >
             <ServiceCard
-              icon={<Target size={40} />} // Icono para "Landing Pages"
+              icon={<Target size={40} />}
               title="Landing Pages de Alto Impacto"
               description="Páginas de aterrizaje optimizadas para la conversión, diseñadas para captar la atención y guiar al usuario hacia la acción."
             />
           </motion.div>
 
-          {/* MODIFICADO: Aplicamos la animación de entrada desde la derecha */}
           <motion.div
-            variants={slideInRight}
+            variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.5 }}
           >
             <ServiceCard
-              icon={<FileEdit size={40} />} // Icono para "Páginas Autogestionables"
+              icon={<FileEdit size={40} />}
               title="Páginas Web Autogestionables"
               description="Sitios web completos y dinámicos, conectados a un CMS para que puedas actualizar tu contenido de forma sencilla e independiente."
             />
