@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: ['radevelopment02@gmail.com'], // Tu email de destino
       subject: `Nuevo Mensaje de Contacto de ${name}`,
-      reply_to: email, // Permite responder directamente al cliente
+      replyTo: email, // Permite responder directamente al cliente
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
           <h2 style="color: #333;">Nuevo mensaje desde tu Portfolio</h2>
