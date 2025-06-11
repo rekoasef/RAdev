@@ -2,8 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants, titleVariants } from '@/utils/animations';
-
-// CORREGIDO: Cambiamos SiAmazonaws por SiAmazon, que es un icono más estándar y compatible.
+// Importamos de 'si' (Simple Icons)
 import { 
     SiNextdotjs, 
     SiReact, 
@@ -11,11 +10,12 @@ import {
     SiNodedotjs, 
     SiPython, 
     SiVercel, 
-    SiAmazon, // <-- CAMBIO AQUÍ
     SiFigma, 
     SiTailwindcss, 
     SiFirebase 
 } from 'react-icons/si';
+// CORRECCIÓN: Importamos el icono de AWS desde 'fa' (Font Awesome)
+import { FaAmazon } from 'react-icons/fa';
 
 const technologies = [
   { name: 'Next.js', icon: <SiNextdotjs size={40} /> },
@@ -25,7 +25,8 @@ const technologies = [
   { name: 'Firebase', icon: <SiFirebase size={40} /> },
   { name: 'TailwindCSS', icon: <SiTailwindcss size={40} /> },
   { name: 'Python', icon: <SiPython size={40} /> },
-  { name: 'AWS', icon: <SiAmazon size={40} /> }, // <-- Y CAMBIO AQUÍ
+  // CORRECCIÓN: Usamos el icono importado de 'fa'
+  { name: 'AWS', icon: <FaAmazon size={40} /> },
   { name: 'Vercel', icon: <SiVercel size={40} /> },
   { name: 'Figma', icon: <SiFigma size={40} /> },
 ];
