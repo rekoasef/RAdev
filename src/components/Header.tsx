@@ -2,47 +2,59 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
+// Importamos hooks de navegación
+import { usePathname, useRouter } from 'next/navigation';
 
 const Logo = () => (
-  <a href="#" className="text-2xl font-display font-bold text-brand-text-primary group">
+  // Cambiamos <a> por <Link> para mejor navegación interna
+  <Link href="/" className="text-2xl font-display font-bold text-brand-text-primary group">
     RA<span className="text-brand-accent group-hover:text-white transition-colors duration-300">.</span>Dev
-  </a>
+  </Link>
 );
 
 const NavLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => {
-  const scrollTo = (selector: string) => {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavigation = (selector: string) => {
+    if (pathname === '/') {
+      // Si estamos en home, hacemos scroll normal
+      const element = document.querySelector(selector);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Si NO estamos en home, redirigimos a la home con el hash
+      router.push(`/${selector}`);
     }
+
     if (onLinkClick) {
       onLinkClick();
     }
   };
 
-  const linkStyles = "text-brand-text-secondary hover:text-brand-accent transition-colors duration-300";
+  const linkStyles = "text-brand-text-secondary hover:text-brand-accent transition-colors duration-300 cursor-pointer";
 
   return (
     <>
       <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-        <button onClick={() => scrollTo('#methodology')} className={linkStyles}>Método</button>
+        <button onClick={() => handleNavigation('#methodology')} className={linkStyles}>Método</button>
       </motion.li>
       <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-        <button onClick={() => scrollTo('#projects')} className={linkStyles}>Proyectos</button>
+        <button onClick={() => handleNavigation('#projects')} className={linkStyles}>Proyectos</button>
       </motion.li>
       <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-        <button onClick={() => scrollTo('#contact')} className="bg-brand-accent text-white py-2 px-4 rounded-md hover:opacity-90 transition-opacity duration-300 font-semibold">Contactar</button>
+        <button onClick={() => handleNavigation('#contact')} className="bg-brand-accent text-white py-2 px-4 rounded-md hover:opacity-90 transition-opacity duration-300 font-semibold">Contactar</button>
       </motion.li>
     </>
   );
 };
 
-
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Mantenemos el efecto de blur solo en la barra superior cuando está cerrada.
   const headerClasses = isOpen 
     ? "bg-brand-dark sticky top-0 z-30" 
     : "bg-brand-dark/90 backdrop-blur-lg sticky top-0 z-30";
@@ -70,7 +82,7 @@ const Header = () => {
           <NavLinks />
         </motion.ul>
 
-        {/* Botón de Menú para Móvil (Hamburguesa) */}
+        {/* Botón de Menú para Móvil */}
         <div className="md:hidden">
           <button onClick={toggleMenu} aria-label="Abrir menú">
             <Menu className="text-white w-7 h-7" />
@@ -80,7 +92,6 @@ const Header = () => {
         {/* Overlay del Menú Móvil */}
         <AnimatePresence>
           {isOpen && (
-            // CAMBIO FINAL: Fondo sólido para eliminar la mezcla con el contenido de atrás.
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
