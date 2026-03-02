@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+
 import WhatsAppButton from "@/components/WhatsAppButton";
-import Analytics from "@/components/Analytics"; // 👈 lo creamos abajo
+import Analytics from "@/components/Analytics";
+import ScrollTracker from "@/components/ScrollTracker";
+import TimeTracker from "@/components/TimeTracker";
 
 export const metadata: Metadata = {
   title: "RA Dev | Desarrollo Web Impulsado por IA",
@@ -20,23 +23,39 @@ export default function RootLayout({
       <body className="bg-brand-dark text-brand-text-primary antialiased">
 
         {children}
+
         <WhatsAppButton />
 
-        {/* 🔥 Google Analytics */}
+        {/* 🔥 GOOGLE ANALYTICS BASE */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-FBZB2DEMFR"
           strategy="afterInteractive"
         />
+
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+
+            function gtag(){
+              dataLayer.push(arguments);
+            }
+
             gtag('js', new Date());
-            gtag('config', 'G-FBZB2DEMFR');
+
+            gtag('config', 'G-FBZB2DEMFR', {
+              page_path: window.location.pathname,
+            });
           `}
         </Script>
 
-        <Analytics /> {/* 👈 mide cambios de página */}
+        {/* 🔥 TRACKING SPA */}
+        <Analytics />
+
+        {/* 🔥 SCROLL DEPTH TRACKING */}
+        <ScrollTracker />
+
+        {/* 🔥 TIME ON PAGE TRACKING */}
+        <TimeTracker />
 
       </body>
     </html>
