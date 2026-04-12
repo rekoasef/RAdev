@@ -41,7 +41,7 @@ const TechStackSection = () => {
         viewport={{ once: true, amount: 0.5 }}
         className="text-3xl md:text-4xl font-bold text-center text-brand-text-primary mb-16"
       >
-        Tecnologías que Dirijo y Superviso
+        Stack Tecnológico
       </motion.h2>
 
       <motion.div 

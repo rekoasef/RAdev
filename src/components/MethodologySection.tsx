@@ -23,30 +23,30 @@ const MethodologyCard = ({ icon, title, children }: { icon: React.ReactNode, tit
 const MethodologySection = () => {
   return (
     <section id="methodology" className="container mx-auto px-6 py-20">
-      <motion.div 
+      <motion.div
         variants={titleVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
         className="text-center max-w-3xl mx-auto"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-brand-text-primary mb-4">Mi Metodología: El Futuro del Desarrollo, Hoy</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-brand-text-primary mb-4">Cómo trabajo</h2>
         <p className="text-brand-text-secondary text-lg">
-          Mi enfoque combina mi experiencia en estrategia web con las herramientas de Inteligencia Artificial más avanzadas. Este método de desarrollo asistido me permite ofrecer ventajas únicas a mis clientes:
+          Cada proyecto que desarrollo combina diseño cuidado, código limpio y foco en resultados. Así me aseguro de que lo que construimos juntos cumpla con tus objetivos reales.
         </p>
       </motion.div>
-      
-      <motion.div 
+
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12"
       >
-        <motion.div variants={itemVariants}><MethodologyCard icon={<Zap size={40} />} title="Velocidad Exponencial">Reducimos los tiempos de desarrollo, permitiéndote lanzar tu proyecto mucho antes.</MethodologyCard></motion.div>
-        <motion.div variants={itemVariants}><MethodologyCard icon={<DollarSign size={40} />} title="Eficiencia en Costos">La automatización de tareas repetitivas se traduce en un presupuesto más ajustado y accesible para ti.</MethodologyCard></motion.div>
-        <motion.div variants={itemVariants}><MethodologyCard icon={<Target size={40} />} title="Enfoque en la Estrategia">Dedico mi tiempo a lo más importante: entender tus objetivos, asegurar la calidad y garantizar que el producto final cumpla tus expectativas.</MethodologyCard></motion.div>
-        <motion.div variants={itemVariants}><MethodologyCard icon={<BrainCircuit size={40} />} title="Innovación Constante">Trabajo en la frontera de la tecnología para asegurar que tu proyecto sea funcional, moderno y competitivo.</MethodologyCard></motion.div>
+        <motion.div variants={itemVariants}><MethodologyCard icon={<Zap size={40} />} title="Entrega Rápida">Tengo procesos y herramientas bien definidos para lanzar tu proyecto en tiempo récord sin comprometer la calidad.</MethodologyCard></motion.div>
+        <motion.div variants={itemVariants}><MethodologyCard icon={<DollarSign size={40} />} title="Inversión Inteligente">Cada funcionalidad que construyo tiene un propósito claro. Sin features innecesarias, sin costos extras.</MethodologyCard></motion.div>
+        <motion.div variants={itemVariants}><MethodologyCard icon={<Target size={40} />} title="Centrado en Resultados">Entiendo tus objetivos antes de escribir una línea de código. El producto final está diseñado para cumplir tus metas reales.</MethodologyCard></motion.div>
+        <motion.div variants={itemVariants}><MethodologyCard icon={<BrainCircuit size={40} />} title="Tecnología Moderna">Uso el stack más actual del mercado para garantizar que tu proyecto sea rápido, seguro y fácil de escalar.</MethodologyCard></motion.div>
       </motion.div>
     </section>
   );

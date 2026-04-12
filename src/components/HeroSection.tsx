@@ -29,7 +29,7 @@ const HeroSection = () => {
           animate="visible"
           className="text-4xl md:text-6xl font-bold font-display text-brand-text-primary leading-tight"
         >
-          {"Llevo tu idea a una realidad digital.".split(" ").map((word, index) => (
+          {"Desarrollo web que".split(" ").map((word, index) => (
             <span key={index} className="inline-block overflow-hidden pb-2">
               <motion.span variants={letterAnimation} className="inline-block pr-2 md:pr-4">
                 {word}
@@ -38,7 +38,7 @@ const HeroSection = () => {
           ))}
           <br />
           <span className="text-brand-accent">
-            {"Soluciones web ágiles".split(" ").map((word, index) => (
+            {"genera resultados".split(" ").map((word, index) => (
               <span key={index} className="inline-block overflow-hidden pb-2">
                 <motion.span variants={letterAnimation} className="inline-block pr-2 md:pr-4">
                   {word}
@@ -46,7 +46,7 @@ const HeroSection = () => {
               </span>
             ))}
           </span>
-          {" impulsadas por IA.".split(" ").map((word, index) => (
+          {" para tu negocio.".split(" ").map((word, index) => (
             <span key={index} className="inline-block overflow-hidden pb-2">
               <motion.span variants={letterAnimation} className="inline-block pr-2 md:pr-4">
                 {word}
@@ -61,9 +61,9 @@ const HeroSection = () => {
           transition={{ duration: 0.5, delay: 1.2 }}
           className="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-brand-text-secondary"
         >
-          Soy RA Dev. Combino estrategia humana con el poder de la IA para construir y entregar proyectos web excepcionales con máxima eficiencia.
+          Soy RA Dev, desarrollador web full-stack. Construyo sitios y aplicaciones modernas, rápidas y pensadas para hacer crecer tu negocio.
         </motion.p>
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -74,7 +74,7 @@ const HeroSection = () => {
             onClick={scrollToMethodology}
             className="bg-brand-accent text-white font-bold py-3 px-8 rounded-lg text-lg hover:opacity-90 transform hover:scale-105 transition-all duration-300"
           >
-            Conoce mi Método
+            Conoce mi Enfoque
           </button>
         </motion.div>
       </div>

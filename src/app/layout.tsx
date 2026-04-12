@@ -8,9 +8,9 @@ import ScrollTracker from "@/components/ScrollTracker";
 import TimeTracker from "@/components/TimeTracker";
 
 export const metadata: Metadata = {
-  title: "RA Dev | Desarrollo Web Impulsado por IA",
+  title: "RA Dev | Desarrollador Web Full-Stack",
   description:
-    "Desarrollador de software especialista en dirigir y entregar proyectos web de alta calidad de forma eficiente, utilizando una metodología de desarrollo asistida por IA.",
+    "Desarrollador web full-stack especializado en construir sitios y aplicaciones modernas, rápidas y enfocadas en resultados. Next.js, React, TypeScript y más.",
 };
 
 export default function RootLayout({

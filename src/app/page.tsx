@@ -6,15 +6,18 @@ import ProjectsSection from "@/components/ProjectsSection";
 import TechStackSection from "@/components/TechStackSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import { getFeaturedProjects } from "@/lib/getProjects";
 
-export default function Home() {
+export default async function Home() {
+  const featuredProjects = await getFeaturedProjects();
+
   return (
     <main>
       <Header />
       <HeroSection />
       <ServicesSection />
       <MethodologySection />
-      <ProjectsSection />
+      <ProjectsSection projects={featuredProjects} />
       <TechStackSection />
       <ContactSection />
       <Footer />
