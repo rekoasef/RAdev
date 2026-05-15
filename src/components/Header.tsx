@@ -3,15 +3,24 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
-// Importamos hooks de navegación
 import { usePathname, useRouter } from 'next/navigation';
 
 const Logo = () => (
-  // Cambiamos <a> por <Link> para mejor navegación interna
-  <Link href="/" className="text-2xl font-display font-bold text-brand-text-primary group">
-    RA<span className="text-brand-accent group-hover:text-white transition-colors duration-300">.</span>Dev
+  <Link href="/" className="flex items-center gap-2 group">
+    <span className="text-brand-accent font-mono text-lg font-bold">&lt;/&gt;</span>
+    <span className="text-xl font-display font-bold text-white">
+      RA<span className="text-brand-accent">dev</span>
+      <span className="text-brand-text-secondary font-normal">.tech</span>
+    </span>
   </Link>
 );
+
+const navItems = [
+  { label: 'Servicios', selector: '#services' },
+  { label: 'Método', selector: '#methodology' },
+  { label: 'Proyectos', selector: '#projects' },
+  { label: 'Stack', selector: '#tech-stack' },
+];
 
 const NavLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => {
   const pathname = usePathname();
@@ -19,33 +28,35 @@ const NavLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => {
 
   const handleNavigation = (selector: string) => {
     if (pathname === '/') {
-      // Si estamos en home, hacemos scroll normal
-      const element = document.querySelector(selector);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Si NO estamos en home, redirigimos a la home con el hash
       router.push(`/${selector}`);
     }
-
-    if (onLinkClick) {
-      onLinkClick();
-    }
+    onLinkClick?.();
   };
-
-  const linkStyles = "text-brand-text-secondary hover:text-brand-accent transition-colors duration-300 cursor-pointer";
 
   return (
     <>
+      {navItems.map((item) => (
+        <motion.li
+          key={item.label}
+          variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}
+        >
+          <button
+            onClick={() => handleNavigation(item.selector)}
+            className="text-brand-text-secondary hover:text-white transition-colors duration-300 cursor-pointer text-sm font-medium"
+          >
+            {item.label}
+          </button>
+        </motion.li>
+      ))}
       <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-        <button onClick={() => handleNavigation('#methodology')} className={linkStyles}>Método</button>
-      </motion.li>
-      <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-        <button onClick={() => handleNavigation('#projects')} className={linkStyles}>Proyectos</button>
-      </motion.li>
-      <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-        <button onClick={() => handleNavigation('#contact')} className="bg-brand-accent text-white py-2 px-4 rounded-md hover:opacity-90 transition-opacity duration-300 font-semibold">Contactar</button>
+        <button
+          onClick={() => handleNavigation('#contact')}
+          className="bg-brand-accent text-white py-2 px-5 rounded-lg text-sm font-bold hover:bg-[#E55A00] hover:shadow-accent-glow-sm transition-all duration-300"
+        >
+          Contactar
+        </button>
       </motion.li>
     </>
   );
@@ -55,66 +66,58 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const headerClasses = isOpen 
-    ? "bg-brand-dark sticky top-0 z-30" 
-    : "bg-brand-dark/90 backdrop-blur-lg sticky top-0 z-30";
-
   return (
-    <motion.header 
+    <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={headerClasses}
+      className="bg-brand-dark/80 backdrop-blur-xl border-b border-white/[0.05] sticky top-0 z-30"
     >
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Logo />
 
-        {/* Menú para Desktop */}
-        <motion.ul 
-            className="hidden md:flex items-center space-x-6"
-            initial="hidden"
-            animate="visible"
-            variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.2, delay: 0.3 } }
-            }}
+        {/* Desktop nav */}
+        <motion.ul
+          className="hidden md:flex items-center gap-7"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+          }}
         >
           <NavLinks />
         </motion.ul>
 
-        {/* Botón de Menú para Móvil */}
+        {/* Mobile toggle */}
         <div className="md:hidden">
-          <button onClick={toggleMenu} aria-label="Abrir menú">
-            <Menu className="text-white w-7 h-7" />
+          <button onClick={toggleMenu} aria-label="Abrir menú" className="text-white">
+            <Menu className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Overlay del Menú Móvil */}
+        {/* Mobile menu overlay */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.25 }}
               className="fixed inset-0 bg-brand-dark z-40"
             >
               <div className="container mx-auto px-6 h-full flex flex-col">
                 <div className="flex justify-between items-center py-4">
-                  <div className="text-2xl font-display font-bold invisible">RA.Dev</div>
+                  <Logo />
                   <button onClick={toggleMenu} aria-label="Cerrar menú">
-                      <X className="text-white w-8 h-8"/>
+                    <X className="text-white w-7 h-7" />
                   </button>
                 </div>
-                
                 <motion.ul
                   className="flex flex-col items-center justify-center flex-grow gap-8 text-xl"
                   initial="hidden"
                   animate="visible"
-                  variants={{
-                    hidden: {},
-                    visible: { transition: { staggerChildren: 0.1 } }
-                  }}
+                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
                 >
                   <NavLinks onLinkClick={toggleMenu} />
                 </motion.ul>

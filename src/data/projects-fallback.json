@@ -1,1 +1,77 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Bossio Monteresino - Estudio Jurídico",
+    "type": "Web Corporativa Profesional",
+    "icon_name": "Scale",
+    "objective": "Digitalizar la presencia de un prestigioso estudio jurídico, estableciendo un canal de comunicación formal y transmitiendo solidez y confianza a través de un diseño sobrio y profesional.",
+    "my_role": "Dirigí el diseño UX/UI enfocándome en la seriedad institucional. Utilicé herramientas de IA para estructurar el contenido legal y optimizar el SEO. La arquitectura en Next.js garantiza tiempos de carga inmediatos, vitales para la retención de clientes corporativos.",
+    "tech_stack": ["Next.js", "TailwindCSS", "Framer Motion", "EmailJS"],
+    "live_url": "https://www.bossiomonteresino.com/",
+    "code_url": null,
+    "featured": true,
+    "display_order": 1,
+    "created_at": "2025-01-01T00:00:00.000Z",
+    "updated_at": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "title": "Mimate Bien - Tienda de Mates",
+    "type": "Catálogo & E-commerce",
+    "icon_name": "Coffee",
+    "objective": "Crear una plataforma visual para exhibir un stock variado de productos regionales, facilitando la consulta de disponibilidad y cerrando ventas de forma directa y personalizada vía WhatsApp.",
+    "my_role": "Implementé un catálogo autogestionable ligero. La integración estratégica con la API de WhatsApp agilizó el embudo de ventas. Utilicé generación de código asistida para crear rápidamente componentes de galería responsivos.",
+    "tech_stack": ["React", "Vite", "TailwindCSS", "WhatsApp Business API"],
+    "live_url": "https://www.mimatebien.com/",
+    "code_url": null,
+    "featured": true,
+    "display_order": 2,
+    "created_at": "2025-01-01T00:00:00.000Z",
+    "updated_at": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "iPhone Store - Catálogo Autogestionable",
+    "type": "Plataforma de Inventario Web",
+    "icon_name": "Apple",
+    "objective": "Empoderar al cliente con una herramienta web intuitiva para que pudiera gestionar su inventario de productos y reseñas en tiempo real.",
+    "my_role": "Definí la arquitectura full-stack serverless con Firebase. Supervisé el front-end en React y el panel de control, usando IA para acelerar la lógica de estado.",
+    "tech_stack": ["React", "TailwindCSS", "Firebase", "Vite"],
+    "live_url": "https://iphone-store-catalogo.web.app/",
+    "code_url": null,
+    "featured": true,
+    "display_order": 3,
+    "created_at": "2025-01-01T00:00:00.000Z",
+    "updated_at": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "title": "Seve Photography - Portfolio de Artista",
+    "type": "Portfolio Autogestionable",
+    "icon_name": "Camera",
+    "objective": "Proporcionar a la fotógrafa una plataforma visualmente impactante y completamente autogestionable para sus galerías.",
+    "my_role": "Estrategia centrada en optimización de imágenes y carga rápida. Integración con Firebase Storage y diseño de transiciones suaves.",
+    "tech_stack": ["React", "Firebase", "TailwindCSS", "Vite"],
+    "live_url": "https://seve-photography-web.web.app/",
+    "code_url": null,
+    "featured": true,
+    "display_order": 4,
+    "created_at": "2025-01-01T00:00:00.000Z",
+    "updated_at": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "title": "RA Dev - Mi Marca Personal",
+    "type": "Caso de Estudio: Plataforma de Marca",
+    "icon_name": "Code",
+    "objective": "Construir la plataforma digital para mi propia marca, demostrando mi metodología de desarrollo ágil asistida por IA.",
+    "my_role": "Desarrollo integral, estrategia de contenido y copywriting. Arquitectura estática con Next.js para máximo rendimiento.",
+    "tech_stack": ["Next.js", "TypeScript", "TailwindCSS", "Vercel"],
+    "live_url": null,
+    "code_url": null,
+    "featured": false,
+    "display_order": 5,
+    "created_at": "2025-01-01T00:00:00.000Z",
+    "updated_at": "2025-01-01T00:00:00.000Z"
+  }
+]

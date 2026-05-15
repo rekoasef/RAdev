@@ -4,35 +4,45 @@ import { Zap, DollarSign, Target, BrainCircuit } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants, titleVariants } from '@/utils/animations';
 
-const MethodologyCard = ({ icon, title, children }: { icon: React.ReactNode, title: string, children: React.ReactNode }) => (
-    <div className="bg-brand-surface/50 p-6 rounded-lg flex flex-col items-center text-center h-full transition-all duration-300 hover:!shadow-lg hover:shadow-brand-accent/10 hover:-translate-y-2">
-        <motion.div
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: "backOut" }}
-          className="text-brand-accent mb-4"
-        >
-          {icon}
-        </motion.div>
-        <h3 className="text-xl font-bold text-brand-text-primary mb-2">{title}</h3>
-        <p className="text-brand-text-secondary">{children}</p>
-    </div>
-);
+const methods = [
+  {
+    icon: Zap,
+    title: "Entrega Rápida",
+    description: "Procesos y herramientas definidos para lanzar tu proyecto en tiempo récord sin comprometer la calidad.",
+  },
+  {
+    icon: DollarSign,
+    title: "Inversión Inteligente",
+    description: "Cada funcionalidad tiene un propósito claro. Sin features innecesarias, sin costos extras.",
+  },
+  {
+    icon: Target,
+    title: "Centrado en Resultados",
+    description: "Entiendo tus objetivos antes de escribir una línea de código. El producto está diseñado para tus metas reales.",
+  },
+  {
+    icon: BrainCircuit,
+    title: "Tecnología Moderna",
+    description: "Uso el stack más actual del mercado para garantizar que tu proyecto sea rápido, seguro y escalable.",
+  },
+];
 
-const MethodologySection = () => {
-  return (
-    <section id="methodology" className="container mx-auto px-6 py-20">
+const MethodologySection = () => (
+  <section id="methodology" className="bg-brand-dark py-24">
+    <div className="container mx-auto px-6">
       <motion.div
         variants={titleVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
-        className="text-center max-w-3xl mx-auto"
+        className="text-center max-w-2xl mx-auto mb-16"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-brand-text-primary mb-4">Cómo trabajo</h2>
-        <p className="text-brand-text-secondary text-lg">
-          Cada proyecto que desarrollo combina diseño cuidado, código limpio y foco en resultados. Así me aseguro de que lo que construimos juntos cumpla con tus objetivos reales.
+        <p className="text-brand-accent text-sm font-semibold tracking-widest uppercase mb-3">Mi enfoque</p>
+        <h2 className="text-3xl md:text-4xl font-bold font-display text-brand-text-primary mb-4">
+          Cómo trabajo
+        </h2>
+        <p className="text-brand-text-secondary text-lg leading-relaxed">
+          Cada proyecto combina diseño cuidado, código limpio y foco en resultados reales para tu negocio.
         </p>
       </motion.div>
 
@@ -41,15 +51,33 @@ const MethodologySection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
       >
-        <motion.div variants={itemVariants}><MethodologyCard icon={<Zap size={40} />} title="Entrega Rápida">Tengo procesos y herramientas bien definidos para lanzar tu proyecto en tiempo récord sin comprometer la calidad.</MethodologyCard></motion.div>
-        <motion.div variants={itemVariants}><MethodologyCard icon={<DollarSign size={40} />} title="Inversión Inteligente">Cada funcionalidad que construyo tiene un propósito claro. Sin features innecesarias, sin costos extras.</MethodologyCard></motion.div>
-        <motion.div variants={itemVariants}><MethodologyCard icon={<Target size={40} />} title="Centrado en Resultados">Entiendo tus objetivos antes de escribir una línea de código. El producto final está diseñado para cumplir tus metas reales.</MethodologyCard></motion.div>
-        <motion.div variants={itemVariants}><MethodologyCard icon={<BrainCircuit size={40} />} title="Tecnología Moderna">Uso el stack más actual del mercado para garantizar que tu proyecto sea rápido, seguro y fácil de escalar.</MethodologyCard></motion.div>
+        {methods.map((method, i) => {
+          const Icon = method.icon;
+          return (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              className="group bg-brand-surface border border-brand-border rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-brand-accent/20 hover:shadow-accent-glow-sm"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * i, ease: "backOut" }}
+                className="w-14 h-14 rounded-xl bg-brand-accent/[0.08] flex items-center justify-center mx-auto mb-5 group-hover:bg-brand-accent/15 transition-colors duration-300"
+              >
+                <Icon size={26} className="text-brand-accent" strokeWidth={1.5} />
+              </motion.div>
+              <h3 className="text-lg font-bold font-display text-brand-text-primary mb-2">{method.title}</h3>
+              <p className="text-brand-text-secondary text-sm leading-relaxed">{method.description}</p>
+            </motion.div>
+          );
+        })}
       </motion.div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default MethodologySection;

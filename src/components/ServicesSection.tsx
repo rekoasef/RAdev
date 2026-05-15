@@ -1,106 +1,124 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { titleVariants } from '@/utils/animations';
-// AGREGAMOS: BarChart3 para dashboards y Database para sistemas
-import { Target, FileEdit, BarChart3, Database } from 'lucide-react';
+import { Globe, TrendingUp, Monitor, Code2 } from 'lucide-react';
 
-const ServiceCard = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => (
-  <div className="group bg-brand-surface p-8 rounded-lg shadow-lg h-full transition-all duration-300 hover:shadow-2xl hover:shadow-brand-accent/10 hover:-translate-y-2 border border-white/5">
-    <div className="text-brand-accent mb-4 transition-transform duration-300 group-hover:scale-110">
-      {icon}
-    </div>
-    <h3 className="text-2xl font-bold text-brand-text-primary mb-3">{title}</h3>
-    <p className="text-brand-text-secondary">{description}</p>
-  </div>
-);
+const services = [
+  {
+    icon: Globe,
+    title: "Desarrollo Web",
+    description: "Sitios rápidos, modernos y optimizados para cualquier dispositivo.",
+    highlight: false,
+  },
+  {
+    icon: TrendingUp,
+    title: "Rendimiento",
+    description: "Webs optimizadas para velocidad, Core Web Vitals y SEO.",
+    highlight: true,
+  },
+  {
+    icon: Monitor,
+    title: "UI/UX Moderno",
+    description: "Diseños intuitivos que convierten visitas en clientes.",
+    highlight: false,
+  },
+  {
+    icon: Code2,
+    title: "Código Limpio",
+    description: "Desarrollo escalable, seguro y mantenible a largo plazo.",
+    highlight: false,
+  },
+];
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 const ServicesSection = () => {
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        duration: 0.8, 
-        ease: "easeOut" 
-      } 
-    },
-  };
+  const scrollToContact = () => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="bg-brand-dark py-20 overflow-x-hidden">
+    <section id="services" className="bg-brand-dark pb-20 overflow-x-hidden">
       <div className="container mx-auto px-6">
-        <motion.h2 
-          variants={titleVariants}
+
+        {/* 4 Service Cards */}
+        <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          className="text-3xl md:text-4xl font-bold text-center text-brand-text-primary mb-12"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
         >
-          Soluciones a tu Medida
-        </motion.h2>
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                className={`group p-6 rounded-2xl border transition-all duration-300 cursor-default
+                  ${service.highlight
+                    ? 'bg-brand-accent/[0.08] border-brand-accent/30 shadow-lg shadow-brand-accent/[0.08]'
+                    : 'bg-brand-surface border-brand-border hover:border-brand-accent/20 hover:bg-[#181818] hover:-translate-y-1'
+                  }`}
+              >
+                <div className={`mb-5 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
+                  ${service.highlight ? 'bg-brand-accent/20' : 'bg-brand-accent/[0.08] group-hover:bg-brand-accent/15'}`}
+                >
+                  <Icon size={22} className="text-brand-accent" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-brand-text-primary font-bold font-display text-lg mb-2">{service.title}</h3>
+                <p className="text-brand-text-secondary text-sm leading-relaxed">{service.description}</p>
+                <div className="flex gap-1.5 mt-6">
+                  {[0, 1, 2].map(i => (
+                    <div
+                      key={i}
+                      className={`w-1.5 h-1.5 rounded-full transition-colors duration-300
+                        ${service.highlight
+                          ? 'bg-brand-accent'
+                          : i === 0
+                          ? 'bg-brand-accent/50 group-hover:bg-brand-accent'
+                          : 'bg-[#333] group-hover:bg-brand-accent/30'
+                        }`}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
-        {/* CAMBIO: Aumentamos max-w-4xl a max-w-5xl para que la grilla 2x2 tenga más espacio */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          
-          {/* Tarjeta 1: Landing Pages */}
-          <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+        {/* Stats Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7 }}
+          className="bg-brand-surface border border-brand-border rounded-2xl px-6 md:px-10 py-6 flex flex-wrap items-center justify-between gap-6"
+        >
+          <div className="flex flex-wrap gap-8 md:gap-12 items-center">
+            {[
+              { value: '10+', label: 'Proyectos Completados' },
+              { value: '98%', label: 'Clientes Satisfechos' },
+              { value: '2+', label: 'Años de Experiencia' },
+            ].map((stat, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <div className="w-px h-10 bg-white/[0.08] hidden md:block" />}
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold font-display text-white">{stat.value}</p>
+                  <p className="text-brand-text-secondary text-xs mt-0.5">{stat.label}</p>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+          <button
+            onClick={scrollToContact}
+            className="bg-brand-accent text-white font-bold py-3.5 px-7 rounded-xl text-sm hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
           >
-            <ServiceCard
-              icon={<Target size={40} />}
-              title="Landing Pages de Alto Impacto"
-              description="Páginas de aterrizaje optimizadas para la conversión, diseñadas estratégicamente para captar la atención y guiar al usuario hacia la acción."
-            />
-          </motion.div>
+            Hablemos de tu proyecto →
+          </button>
+        </motion.div>
 
-          {/* Tarjeta 2: Webs Autogestionables */}
-          <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <ServiceCard
-              icon={<FileEdit size={40} />}
-              title="Páginas Web Autogestionables"
-              description="Sitios web dinámicos conectados a un CMS, permitiéndote actualizar tu contenido de forma sencilla e independiente sin tocar código."
-            />
-          </motion.div>
-
-          {/* Tarjeta 3: Automatizaciones (NUEVA) */}
-          <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <ServiceCard
-              icon={<BarChart3 size={40} />}
-              title="Automatización y Dashboards"
-              description="Transformo datos en decisiones. Implemento automatizaciones de carga de datos, reportes de KPIs y dashboards interactivos para optimizar tu tiempo."
-            />
-          </motion.div>
-
-          {/* Tarjeta 4: Sistemas a Medida (NUEVA) */}
-          <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <ServiceCard
-              icon={<Database size={40} />}
-              title="Sistemas de Gestión a Medida"
-              description="Herramientas potentes para tu negocio. Desarrollo sistemas de control de stock, plataformas de inscripciones y gestión interna adaptados a tus flujos."
-            />
-          </motion.div>
-
-        </div>
       </div>
     </section>
   );

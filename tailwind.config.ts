@@ -13,18 +13,17 @@ const config: Config = {
         display: ['"Exo 2"', 'sans-serif'],
       },
       colors: {
-        // Paleta Principal (Tema Oscuro)
-        'brand-dark': '#1A1A1A',        // Fondo Principal
-        'brand-surface': '#2C2C2C',    // Superficies Secundarias (cards)
-        'brand-accent': '#FF4500',      // Acento Vibrante (Naranja Eléctrico)
-        'brand-text-primary': '#E0E0E0',// Texto Principal
-        'brand-text-secondary': '#A0A0A0',// Texto Secundario
-        
-        // Paleta Secundaria (Para un futuro tema claro)
-        'brand-light-bg': '#F8F8F8',
-        'brand-light-surface': '#F0F2F5',
-        'brand-light-accent': '#4682B4', // Azul Acero
-        'brand-light-text': '#212529',
+        'brand-dark': '#0A0A0A',
+        'brand-surface': '#141414',
+        'brand-surface-2': '#1E1E1E',
+        'brand-accent': '#FF6500',
+        'brand-text-primary': '#F0F0F0',
+        'brand-text-secondary': '#8A8A8A',
+        'brand-border': 'rgba(255,255,255,0.07)',
+      },
+      boxShadow: {
+        'accent-glow': '0 0 40px rgba(255, 101, 0, 0.15)',
+        'accent-glow-sm': '0 0 20px rgba(255, 101, 0, 0.10)',
       },
     },
   },

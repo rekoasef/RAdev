@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 import WhatsAppButton from "@/components/WhatsAppButton";
+import PageLoader from "@/components/PageLoader";
 import Analytics from "@/components/Analytics";
 import ScrollTracker from "@/components/ScrollTracker";
 import TimeTracker from "@/components/TimeTracker";
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="es" className="!scroll-smooth">
       <body className="bg-brand-dark text-brand-text-primary antialiased">
 
+        <PageLoader />
         {children}
 
         <WhatsAppButton />
