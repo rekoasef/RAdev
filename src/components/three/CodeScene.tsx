@@ -142,10 +142,10 @@ const EditorPanel = ({ reduced }: { reduced: boolean }) => {
         draw(totalChars, false);
       }
     } else if (typed.current < totalChars) {
-      // ~40 caracteres por segundo
-      if (t - lastTick.current > 0.025) {
+      // ~40 caracteres por segundo, redibujando de a 2 (mitad de redraws)
+      if (t - lastTick.current > 0.05) {
         lastTick.current = t;
-        typed.current += 1;
+        typed.current = Math.min(typed.current + 2, totalChars);
         draw(typed.current, true);
       }
     } else {
@@ -281,6 +281,31 @@ const OrbitParticles = ({ reduced }: { reduced: boolean }) => {
   );
 };
 
+/* ── Guardia de FPS: monitorea en ventanas de 3s; si el equipo no
+   sostiene la escena (sin GPU, batería, etc.), avisa para degradar ── */
+const FpsGuard = ({ onPoor }: { onPoor: () => void }) => {
+  const frames = useRef(0);
+  const windowStart = useRef<number | null>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    if (windowStart.current === null) {
+      windowStart.current = t + 2; // warmup: ignorar arranque/compilación
+      frames.current = 0;
+      return;
+    }
+    if (t < windowStart.current) return;
+    frames.current++;
+    if (t - windowStart.current >= 3) {
+      const fps = frames.current / (t - windowStart.current);
+      if (fps < 22) onPoor();
+      windowStart.current = t;
+      frames.current = 0;
+    }
+  });
+  return null;
+};
+
 /* ── Grupo con parallax hacia el mouse ── */
 const Composition = ({ reduced, pointer }: { reduced: boolean; pointer: PointerRef }) => {
   const group = useRef<THREE.Group>(null);
@@ -308,6 +333,8 @@ const CodeScene = () => {
   const pointer = useRef({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
+  // 'high' → dpr 1.5 | 'low' → dpr 1 | 'off' → fallback estático sin WebGL
+  const [quality, setQuality] = useState<'high' | 'low' | 'off'>('high');
 
   const reduced =
     typeof window !== "undefined" &&
@@ -337,15 +364,32 @@ const CodeScene = () => {
     return () => obs.disconnect();
   }, []);
 
+  // Equipo sin GPU utilizable (p. ej. aceleración por hardware desactivada):
+  // se reemplaza la escena por un glow estático y la página queda liviana.
+  if (quality === 'off') {
+    return (
+      <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
+        <div
+          className="w-[75%] aspect-square rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(255,101,0,0.12) 0%, rgba(255,101,0,0.04) 45%, transparent 70%)' }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div ref={containerRef} className="w-full h-full">
       <Canvas
         frameloop={visible ? "always" : "never"}
         camera={{ position: [0, 0, 5], fov: 45 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        dpr={quality === 'high' ? [1, 1.5] : 1}
+        gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent", pointerEvents: "none" }}
       >
+        <FpsGuard
+          key={quality}
+          onPoor={() => setQuality((q) => (q === 'high' ? 'low' : 'off'))}
+        />
         <Composition reduced={reduced} pointer={pointer} />
       </Canvas>
     </div>
