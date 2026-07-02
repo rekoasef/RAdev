@@ -55,8 +55,11 @@ const ContactSection = () => {
   return (
     <section id="contact" className="relative bg-brand-dark py-24 overflow-hidden">
 
-      {/* Glow ambiental */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand-accent/[0.05] rounded-full blur-[160px] pointer-events-none" />
+      {/* Glow ambiental (radial-gradient, sin filtro blur) */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(255,101,0,0.05) 0%, transparent 65%)' }}
+      />
 
       <div className="relative z-10 container mx-auto px-6 max-w-5xl">
         <motion.div
@@ -133,7 +136,7 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="lg:col-span-3 bg-brand-surface/80 backdrop-blur-sm border border-brand-border rounded-2xl p-8"
+            className="lg:col-span-3 bg-brand-surface border border-brand-border rounded-2xl p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid sm:grid-cols-2 gap-5">

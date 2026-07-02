@@ -16,7 +16,7 @@ const DevCard = ({ project, index }: { project: (typeof projectsInDev)[0]; index
   >
   <Tilt
     max={5}
-    className="group relative h-full bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 hover:border-brand-accent/20 hover:bg-white/[0.05] transition-all duration-300"
+    className="group relative h-full bg-[#121214]/90 border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 hover:border-brand-accent/20 hover:bg-[#17171a]/90 transition-all duration-300"
   >
     {/* Header row */}
     <div className="flex items-start justify-between gap-3">
@@ -69,30 +69,24 @@ const DevCard = ({ project, index }: { project: (typeof projectsInDev)[0]; index
 const ProjectsInDevelopmentSection = () => (
   <section className="relative py-24 overflow-hidden bg-brand-dark">
 
-    {/* ── RADEV BG IMAGE ── */}
+    {/* ── RADEV BG IMAGE (estática: animarla repintaba toda la sección) ── */}
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <motion.div
-        className="absolute inset-0"
-        animate={{ scale: [1, 1.07, 1], x: [0, 12, 0] }}
-        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <Image
-          src="/images/radev.jpg"
-          alt=""
-          fill
-          className="object-cover opacity-[0.2]"
-          aria-hidden="true"
-        />
-      </motion.div>
+      <Image
+        src="/images/radev.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover opacity-[0.2]"
+        aria-hidden="true"
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-transparent to-brand-dark" />
       <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/60 via-transparent to-brand-dark/60" />
     </div>
 
-    {/* ── GLOW SUTIL ── */}
-    <motion.div
-      animate={{ opacity: [0.04, 0.09, 0.04] }}
-      transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-brand-accent rounded-full blur-[160px] pointer-events-none"
+    {/* ── GLOW SUTIL (radial-gradient estático) ── */}
+    <div
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] pointer-events-none"
+      style={{ background: 'radial-gradient(ellipse, rgba(255,101,0,0.06) 0%, transparent 65%)' }}
     />
 
     <div className="relative z-10 container mx-auto px-6">

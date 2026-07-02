@@ -73,16 +73,18 @@ const HeroSection = () => {
         }}
       />
 
-      {/* ── GLOW ORBS ── */}
+      {/* ── GLOW ORBS (radial-gradient: sin filtros de blur costosos) ── */}
       <motion.div
-        animate={{ scale: [1, 1.25, 1], opacity: [0.06, 0.11, 0.06] }}
+        animate={{ opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-[-10%] right-[2%] w-[650px] h-[650px] bg-brand-accent rounded-full blur-[180px] pointer-events-none"
+        className="absolute top-[-10%] right-[2%] w-[750px] h-[750px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(255,101,0,0.09) 0%, rgba(255,101,0,0.03) 40%, transparent 70%)' }}
       />
       <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.04, 0.08, 0.04] }}
+        animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-        className="absolute bottom-0 left-[10%] w-[500px] h-[500px] bg-brand-accent rounded-full blur-[150px] pointer-events-none"
+        className="absolute bottom-[-10%] left-[5%] w-[600px] h-[600px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(255,101,0,0.06) 0%, rgba(255,101,0,0.02) 40%, transparent 70%)' }}
       />
 
       <div className="relative z-10 container mx-auto px-6 py-24 grid lg:grid-cols-2 gap-14 items-center">

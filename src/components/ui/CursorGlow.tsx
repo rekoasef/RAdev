@@ -24,20 +24,20 @@ export default function CursorGlow() {
 
   if (!enabled) return null;
 
+  // Sin mix-blend-mode: obligaba a recomponer toda la página en cada frame.
+  // Un gradiente translúcido en su propia capa GPU es visualmente igual y gratis.
   return (
-    <div className="fixed inset-0 z-[60] pointer-events-none mix-blend-screen" aria-hidden="true">
+    <div className="fixed inset-0 z-[60] pointer-events-none overflow-hidden" aria-hidden="true">
       <motion.div
-        style={{ x: sx, y: sy }}
-        className="absolute w-[550px] h-[550px] -ml-[275px] -mt-[275px] rounded-full"
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(255,101,0,0.07) 0%, rgba(255,101,0,0.03) 35%, transparent 70%)',
-          }}
-        />
-      </motion.div>
+        style={{
+          x: sx,
+          y: sy,
+          willChange: 'transform',
+          background:
+            'radial-gradient(circle, rgba(255,140,60,0.05) 0%, rgba(255,101,0,0.02) 40%, transparent 70%)',
+        }}
+        className="absolute w-[500px] h-[500px] -ml-[250px] -mt-[250px] rounded-full"
+      />
     </div>
   );
 }

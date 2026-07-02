@@ -84,7 +84,7 @@ const Header = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`sticky top-0 z-30 border-b transition-all duration-500 ${
         scrolled
-          ? 'bg-brand-dark/85 backdrop-blur-xl border-white/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.4)]'
+          ? 'bg-brand-dark/90 backdrop-blur-md border-white/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.4)]'
           : 'bg-transparent border-transparent'
       }`}
     >

@@ -56,21 +56,16 @@ const ProjectCard = ({ project }: { project: (typeof projects)[0] }) => (
 const ProjectsSection = () => (
   <section id="projects" className="relative bg-brand-dark py-24 overflow-hidden">
 
-    {/* ── RADEV1 BG IMAGE ── */}
+    {/* ── RADEV1 BG IMAGE (estática: animarla repintaba toda la sección) ── */}
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <motion.div
-        className="absolute inset-0"
-        animate={{ scale: [1, 1.07, 1], x: [0, -12, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <Image
-          src="/images/radev1.jpg"
-          alt=""
-          fill
-          className="object-cover opacity-[0.14]"
-          aria-hidden="true"
-        />
-      </motion.div>
+      <Image
+        src="/images/radev1.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover opacity-[0.14]"
+        aria-hidden="true"
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-transparent to-brand-dark" />
       <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/60 via-transparent to-brand-dark/60" />
     </div>

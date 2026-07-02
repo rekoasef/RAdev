@@ -16,9 +16,15 @@ const HeroBackground = () => (
       }}
     />
 
-    {/* Orbes de glow */}
-    <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-accent/[0.07] rounded-full blur-[160px]" />
-    <div className="absolute bottom-0 right-[10%] w-[400px] h-[400px] bg-brand-accent/[0.05] rounded-full blur-[140px]" />
+    {/* Orbes de glow (radial-gradient, sin filtro blur) */}
+    <div
+      className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[600px]"
+      style={{ background: 'radial-gradient(ellipse, rgba(255,101,0,0.07) 0%, transparent 65%)' }}
+    />
+    <div
+      className="absolute bottom-0 right-[5%] w-[500px] h-[500px]"
+      style={{ background: 'radial-gradient(circle, rgba(255,101,0,0.05) 0%, transparent 65%)' }}
+    />
 
     {/* Fade inferior */}
     <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-brand-dark to-transparent" />

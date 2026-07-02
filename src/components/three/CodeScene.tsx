@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -306,6 +306,8 @@ const Composition = ({ reduced, pointer }: { reduced: boolean; pointer: PointerR
 
 const CodeScene = () => {
   const pointer = useRef({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(true);
 
   const reduced =
     typeof window !== "undefined" &&
@@ -322,15 +324,31 @@ const CodeScene = () => {
     return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
+  // Pausa total del render loop cuando la escena sale del viewport:
+  // scrollear el resto de la página no compite con el canvas.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <Canvas
-      camera={{ position: [0, 0, 5], fov: 45 }}
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      style={{ background: "transparent", pointerEvents: "none" }}
-    >
-      <Composition reduced={reduced} pointer={pointer} />
-    </Canvas>
+    <div ref={containerRef} className="w-full h-full">
+      <Canvas
+        frameloop={visible ? "always" : "never"}
+        camera={{ position: [0, 0, 5], fov: 45 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        style={{ background: "transparent", pointerEvents: "none" }}
+      >
+        <Composition reduced={reduced} pointer={pointer} />
+      </Canvas>
+    </div>
   );
 };
 
