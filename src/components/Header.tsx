@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -64,15 +64,35 @@ const NavLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => {
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="bg-brand-dark/80 backdrop-blur-xl border-b border-white/[0.05] sticky top-0 z-30"
+      className={`sticky top-0 z-30 border-b transition-all duration-500 ${
+        scrolled
+          ? 'bg-brand-dark/85 backdrop-blur-xl border-white/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.4)]'
+          : 'bg-transparent border-transparent'
+      }`}
     >
+      {/* Barra de progreso de lectura */}
+      <motion.div
+        style={{ scaleX: progress }}
+        className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-brand-accent to-[#FF9350]"
+      />
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Logo />
 

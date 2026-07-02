@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Open Sans"', 'sans-serif'],
-        display: ['"Exo 2"', 'sans-serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
+        display: ['var(--font-display)', 'sans-serif'],
       },
       colors: {
         'brand-dark': '#0A0A0A',

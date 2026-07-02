@@ -3,6 +3,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { projectsInDev } from '@/data/projects';
+import Tilt from '@/components/ui/Tilt';
+import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
 const DevCard = ({ project, index }: { project: (typeof projectsInDev)[0]; index: number }) => (
   <motion.div
@@ -10,7 +12,11 @@ const DevCard = ({ project, index }: { project: (typeof projectsInDev)[0]; index
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.2 }}
     transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-    className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 hover:border-brand-accent/20 hover:bg-white/[0.05] transition-all duration-300"
+    className="h-full"
+  >
+  <Tilt
+    max={5}
+    className="group relative h-full bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 hover:border-brand-accent/20 hover:bg-white/[0.05] transition-all duration-300"
   >
     {/* Header row */}
     <div className="flex items-start justify-between gap-3">
@@ -56,6 +62,7 @@ const DevCard = ({ project, index }: { project: (typeof projectsInDev)[0]; index
 
     {/* Bottom accent line */}
     <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </Tilt>
   </motion.div>
 );
 
@@ -98,7 +105,7 @@ const ProjectsInDevelopmentSection = () => (
         transition={{ duration: 0.6 }}
         className="text-center mb-14"
       >
-        <p className="text-brand-accent text-sm font-semibold tracking-widest uppercase mb-3">Lo que viene</p>
+        <TerminalPrompt command="git branch --en-desarrollo" />
         <h2 className="text-3xl md:text-4xl font-bold font-display text-brand-text-primary mb-4">
           Proyectos en Desarrollo
         </h2>

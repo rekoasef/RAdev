@@ -6,12 +6,17 @@ import { ExternalLink, Code2 } from 'lucide-react';
 import Image from 'next/image';
 import { containerVariants, titleVariants, itemVariants } from '@/utils/animations';
 import { projects } from '@/data/projects';
+import SpotlightCard from '@/components/ui/SpotlightCard';
+import Tilt from '@/components/ui/Tilt';
+import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
 const ProjectCard = ({ project }: { project: (typeof projects)[0] }) => (
-  <motion.div
-    variants={itemVariants}
-    className="group bg-brand-surface border border-brand-border rounded-2xl p-7 flex flex-col h-full transition-all duration-300 hover:border-brand-accent/25 hover:-translate-y-1 hover:shadow-accent-glow-sm"
-  >
+  <motion.div variants={itemVariants} className="group h-full">
+    <Tilt className="h-full" max={5}>
+    <SpotlightCard
+      className="bg-brand-surface border border-brand-border rounded-2xl p-7 h-full transition-all duration-300 hover:border-brand-accent/25 group-hover:-translate-y-1 hover:shadow-accent-glow-sm"
+      contentClassName="flex flex-col"
+    >
     <div className="flex items-start justify-between mb-5">
       <div className="w-12 h-12 rounded-xl bg-brand-accent/[0.08] flex items-center justify-center text-brand-accent group-hover:bg-brand-accent/15 transition-colors duration-300">
         {project.icon}
@@ -43,6 +48,8 @@ const ProjectCard = ({ project }: { project: (typeof projects)[0] }) => (
         </a>
       )}
     </div>
+    </SpotlightCard>
+    </Tilt>
   </motion.div>
 );
 
@@ -75,7 +82,7 @@ const ProjectsSection = () => (
         viewport={{ once: true, amount: 0.5 }}
         className="text-center mb-14"
       >
-        <p className="text-brand-accent text-sm font-semibold tracking-widest uppercase mb-3">Portfolio</p>
+        <TerminalPrompt command="git log --proyectos" />
         <h2 className="text-3xl md:text-4xl font-bold font-display text-brand-text-primary">
           Proyectos Destacados
         </h2>

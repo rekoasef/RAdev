@@ -12,8 +12,10 @@ const Footer = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="bg-brand-dark border-t border-white/[0.05]"
+      className="relative bg-brand-dark border-t border-white/[0.05]"
     >
+      {/* Línea de acento superior */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-brand-accent/40 to-transparent" />
       {/* Tagline bar */}
       <div className="border-b border-white/[0.05] py-5">
         <div className="container mx-auto px-6 flex items-center justify-center gap-3 flex-wrap">

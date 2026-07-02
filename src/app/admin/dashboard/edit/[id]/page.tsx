@@ -5,15 +5,16 @@ import { createAdminClient } from '@/lib/supabase';
 import ProjectForm from '../../_components/ProjectForm';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function EditProjectPage({ params }: Props) {
+  const { id } = await params;
   const admin = createAdminClient();
   const { data: project, error } = await admin
     .from('projects')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (error || !project) notFound();

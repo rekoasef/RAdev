@@ -2,11 +2,16 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Loader de marca: rápido (1.3s) y solo en la primera visita de la sesión.
+// Las navegaciones siguientes entran directo, sin bloquear.
 export default function PageLoader() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 2600);
+    if (sessionStorage.getItem('radev_loaded')) return;
+    sessionStorage.setItem('radev_loaded', '1');
+    setVisible(true);
+    const timer = setTimeout(() => setVisible(false), 1300);
     return () => clearTimeout(timer);
   }, []);
 
@@ -14,9 +19,9 @@ export default function PageLoader() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          exit={{ opacity: 0, filter: 'blur(18px)', scale: 1.06 }}
-          transition={{ duration: 1.4, ease: 'easeIn' }}
-          className="fixed inset-0 z-[200] bg-[#0A0A0A] flex flex-col items-center justify-center gap-10"
+          exit={{ opacity: 0, filter: 'blur(14px)', scale: 1.05 }}
+          transition={{ duration: 0.6, ease: 'easeIn' }}
+          className="fixed inset-0 z-[200] bg-[#0A0A0A] flex flex-col items-center justify-center gap-8"
         >
           {/* Logo letra por letra */}
           <div className="flex items-baseline">
@@ -30,11 +35,11 @@ export default function PageLoader() {
             ].map((item, i) => (
               <motion.span
                 key={i}
-                initial={{ y: 50, opacity: 0 }}
+                initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
-                  delay: 0.15 + i * 0.09,
-                  duration: 0.6,
+                  delay: 0.05 + i * 0.06,
+                  duration: 0.45,
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className={`text-[4.5rem] md:text-[6rem] font-bold leading-none tracking-tight ${
@@ -51,7 +56,7 @@ export default function PageLoader() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
             className="text-white/30 text-sm tracking-[0.25em] uppercase"
           >
             Desarrollo Web · Armstrong
@@ -62,7 +67,7 @@ export default function PageLoader() {
             <motion.div
               initial={{ x: '-100%' }}
               animate={{ x: '0%' }}
-              transition={{ delay: 0.5, duration: 1.6, ease: 'easeInOut' }}
+              transition={{ delay: 0.2, duration: 0.9, ease: 'easeOut' }}
               className="w-full h-full bg-[#FF6500] rounded-full"
             />
           </motion.div>

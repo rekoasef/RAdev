@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
 declare global {
   interface Window {
@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-export default function Analytics() {
+function AnalyticsTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -22,4 +22,13 @@ export default function Analytics() {
   }, [pathname, searchParams]);
 
   return null;
+}
+
+// Next 15 exige que useSearchParams() viva dentro de un Suspense boundary.
+export default function Analytics() {
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsTracker />
+    </Suspense>
+  );
 }

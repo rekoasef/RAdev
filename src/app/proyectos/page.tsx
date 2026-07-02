@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
 import HeroBackground from "@/components/HeroBackground";
+import CursorGlow from "@/components/ui/CursorGlow";
 import { getAllProjects } from "@/lib/getProjects";
 
 export default async function AllProjectsPage() {
@@ -9,6 +10,7 @@ export default async function AllProjectsPage() {
 
   return (
     <main className="bg-brand-dark min-h-screen flex flex-col relative">
+      <CursorGlow />
       <Header />
 
       <HeroBackground />

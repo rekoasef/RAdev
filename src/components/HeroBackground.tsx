@@ -1,102 +1,28 @@
 "use client";
-import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { type ISourceOptions, type Engine } from "tsparticles-engine";
-import { loadSlim } from "tsparticles-slim"; 
 
-const HeroBackground = () => {
-    // Esta es la nueva forma correcta de inicializar el motor de partículas.
-    // Usamos 'useCallback' para que la función no se recree en cada render.
-    const particlesInit = useCallback(async (engine: Engine) => {
-        // console.log(engine);
-        // Aquí se carga el paquete 'slim' que contiene las animaciones de links.
-        await loadSlim(engine);
-    }, []);
+// Fondo ambiental liviano (CSS puro): grilla técnica + orbes de glow.
+// Reemplaza a tsparticles sin costo de JS en runtime.
+const HeroBackground = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    {/* Grilla técnica sutil */}
+    <div
+      className="absolute inset-0 opacity-[0.35]"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
+        backgroundSize: "72px 72px",
+        maskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+        WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%)",
+      }}
+    />
 
-    const particlesLoaded = useCallback(async (container: any | undefined) => {
-        // await console.log("Particles loaded", container);
-    }, []);
-    
-    // El objeto de opciones de configuración no cambia.
-    const options: ISourceOptions = {
-        background: {
-            color: {
-                value: "transparent",
-            },
-        },
-        fpsLimit: 60,
-        interactivity: {
-            events: {
-                onHover: {
-                    enable: true,
-                    mode: "grab",
-                },
-                onClick: {
-                    enable: true,
-                    mode: "push",
-                },
-            },
-            modes: {
-                grab: {
-                    distance: 140,
-                    links: {
-                        opacity: 1,
-                    }
-                },
-                push: {
-                    quantity: 4,
-                },
-            },
-        },
-        particles: {
-            color: {
-                value: "#A0A0A0",
-            },
-            links: {
-                color: "#A0A0A0",
-                distance: 150,
-                enable: true,
-                opacity: 0.2,
-                width: 1,
-            },
-            move: {
-                direction: "none",
-                enable: true,
-                outModes: {
-                    default: "bounce",
-                },
-                random: true,
-                speed: 0.5,
-                straight: false,
-            },
-            number: {
-                density: {
-                    enable: true,
-                },
-                value: 80,
-            },
-            opacity: {
-                value: 0.3,
-            },
-            shape: {
-                type: "circle",
-            },
-            size: {
-                value: { min: 1, max: 3 },
-            },
-        },
-        detectRetina: true,
-    };
+    {/* Orbes de glow */}
+    <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-accent/[0.07] rounded-full blur-[160px]" />
+    <div className="absolute bottom-0 right-[10%] w-[400px] h-[400px] bg-brand-accent/[0.05] rounded-full blur-[140px]" />
 
-    return (
-        <Particles
-            id="tsparticles"
-            init={particlesInit}
-            loaded={particlesLoaded}
-            options={options}
-            className="absolute top-0 left-0 w-full h-full z-0"
-        />
-    );
-};
+    {/* Fade inferior */}
+    <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-brand-dark to-transparent" />
+  </div>
+);
 
 export default HeroBackground;
