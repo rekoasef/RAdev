@@ -9,6 +9,8 @@ export interface Project {
   myRole?: string;
   techStack: string[];
   liveUrl?: string;
+  /** Captura del sitio (16:10) en /public. */
+  image?: string;
   /** Se muestra en la home (Proyectos Destacados). */
   featured: boolean;
 }
@@ -24,6 +26,7 @@ export const projects: Project[] = [
     myRole: "Fundador y desarrollador integral. Diseñé el producto de punta a punta: registro rápido desde el celular, doble moneda peso/dólar, alertas de presupuesto e informes mensuales generados con la API de Claude (Anthropic). Arquitectura en Next.js con Supabase, monitoreo con Sentry y suscripción paga con 30 días de prueba.",
     techStack: ["Next.js", "Supabase", "Claude API", "TailwindCSS"],
     liveUrl: "https://gestorlumus.site",
+    image: "/images/projects/lumus.webp",
     featured: true,
   },
   {
@@ -35,6 +38,7 @@ export const projects: Project[] = [
     myRole: "Dirigí el diseño UX/UI enfocándome en la seriedad institucional. Utilicé herramientas de IA para estructurar el contenido legal y optimizar el SEO. La arquitectura en Next.js garantiza tiempos de carga inmediatos, vitales para la retención de clientes corporativos.",
     techStack: ["Next.js", "TailwindCSS", "Framer Motion", "EmailJS"],
     liveUrl: "https://www.bossiomonteresino.com/",
+    image: "/images/projects/bossio-monteresino.webp",
     featured: true,
   },
   {
@@ -46,6 +50,7 @@ export const projects: Project[] = [
     myRole: "Diseño y desarrollo completo: catálogo de 9 categorías de productos, secciones de empresa e ingeniería y un recorrido de scroll fluido con animaciones cuidadas, construido sobre Next.js para cargar rápido en cualquier dispositivo.",
     techStack: ["Next.js", "TailwindCSS", "Framer Motion", "Lenis"],
     liveUrl: "https://dinfes.vercel.app/",
+    image: "/images/projects/dinfes.webp",
     featured: true,
   },
   {
@@ -57,6 +62,7 @@ export const projects: Project[] = [
     myRole: "Implementé un catálogo autogestionable ligero. La integración estratégica con la API de WhatsApp agilizó el embudo de ventas. Utilicé generación de código asistida para crear rápidamente componentes de galería responsivos.",
     techStack: ["React", "Vite", "TailwindCSS", "WhatsApp Business API"],
     liveUrl: "https://www.mimatebien.com/",
+    image: "/images/projects/mimate-bien.webp",
     featured: true,
   },
   {
