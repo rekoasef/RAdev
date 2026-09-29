@@ -10,42 +10,7 @@ import { getIcon } from '@/lib/iconMap';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import Tilt from '@/components/ui/Tilt';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
-
-// Captura del sitio dentro de un marco de navegador con la URL real.
-const BrowserPreview = ({ project }: { project: Project }) => {
-  const host = project.liveUrl ? new URL(project.liveUrl).host.replace(/^www\./, '') : '';
-  const frame = (
-    <>
-      <div className="flex items-center gap-3 h-9 px-4 bg-brand-surface-2 border-b border-brand-border">
-        <span className="flex gap-1.5" aria-hidden="true">
-          <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-          <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-          <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-        </span>
-        {host && (
-          <span className="font-mono text-xs text-brand-text-secondary truncate">{host}</span>
-        )}
-      </div>
-      <div className="relative aspect-[16/10] overflow-hidden bg-brand-dark">
-        <Image
-          src={project.image!}
-          alt={`Captura del sitio de ${project.title.split(' - ')[0]}`}
-          fill
-          sizes="(min-width: 768px) 500px, 100vw"
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-        />
-      </div>
-    </>
-  );
-
-  return project.liveUrl ? (
-    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true" className="block">
-      {frame}
-    </a>
-  ) : (
-    <div>{frame}</div>
-  );
-};
+import BrowserPreview from '@/components/ui/BrowserPreview';
 
 const ProjectCard = ({ project }: { project: Project }) => (
   <motion.div variants={itemVariants} className="group h-full">
@@ -54,7 +19,7 @@ const ProjectCard = ({ project }: { project: Project }) => (
       className="bg-brand-surface border border-brand-border rounded-2xl h-full transition-all duration-300 hover:border-brand-accent/25 group-hover:-translate-y-1 hover:shadow-accent-glow-sm"
       contentClassName="flex flex-col"
     >
-    {project.image ? <BrowserPreview project={project} /> : null}
+    {project.image ? <BrowserPreview project={{ ...project, image: project.image }} /> : null}
 
     <div className="flex flex-col flex-grow p-7">
     <div className="flex items-start justify-between gap-4 mb-3">
