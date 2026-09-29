@@ -5,7 +5,6 @@ import { Globe, TrendingUp, Monitor, Code2 } from 'lucide-react';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import Tilt from '@/components/ui/Tilt';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
-import Counter from '@/components/ui/Counter';
 
 const services = [
   {
@@ -108,7 +107,7 @@ const ServicesSection = () => {
           })}
         </motion.div>
 
-        {/* Stats Bar */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,22 +115,13 @@ const ServicesSection = () => {
           transition={{ duration: 0.7 }}
           className="bg-brand-surface border border-brand-border rounded-2xl px-6 md:px-10 py-6 flex flex-wrap items-center justify-between gap-6"
         >
-          <div className="flex flex-wrap gap-8 md:gap-12 items-center">
-            {[
-              { value: 10, suffix: '+', label: 'Proyectos Completados' },
-              { value: 98, suffix: '%', label: 'Clientes Satisfechos' },
-              { value: 2, suffix: '+', label: 'Años de Experiencia' },
-            ].map((stat, i) => (
-              <React.Fragment key={i}>
-                {i > 0 && <div className="w-px h-10 bg-white/[0.08] hidden md:block" />}
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold font-display text-white">
-                    <Counter target={stat.value} suffix={stat.suffix} />
-                  </p>
-                  <p className="text-brand-text-secondary text-xs mt-0.5">{stat.label}</p>
-                </div>
-              </React.Fragment>
-            ))}
+          <div>
+            <p className="text-lg md:text-xl font-bold font-display text-brand-text-primary">
+              ¿Tenés un proyecto en mente?
+            </p>
+            <p className="text-brand-text-secondary text-sm mt-1">
+              Contame qué necesitás y te respondo en menos de 24 hs.
+            </p>
           </div>
           <button
             onClick={scrollToContact}
