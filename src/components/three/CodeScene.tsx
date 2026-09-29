@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 type PointerRef = MutableRefObject<{ x: number; y: number }>;
@@ -306,10 +306,17 @@ const FpsGuard = ({ onPoor }: { onPoor: () => void }) => {
   return null;
 };
 
+/* Ancho (en unidades de escena, plano z=0) que necesita la composición para
+   entrar completa: la terminal está más cerca de la cámara y se proyecta más
+   grande, y el parallax la rota. Por debajo de este ancho se escala. */
+const COMPOSITION_WIDTH = 5.1;
+
 /* ── Grupo con parallax hacia el mouse ── */
 const Composition = ({ reduced, pointer }: { reduced: boolean; pointer: PointerRef }) => {
   const group = useRef<THREE.Group>(null);
   const mouse = useRef({ x: 0, y: 0 });
+  const viewportWidth = useThree((state) => state.viewport.width);
+  const fit = Math.min(1, viewportWidth / COMPOSITION_WIDTH);
 
   useFrame(() => {
     if (!group.current) return;
@@ -320,11 +327,13 @@ const Composition = ({ reduced, pointer }: { reduced: boolean; pointer: PointerR
   });
 
   return (
-    <group ref={group}>
-      <EditorPanel reduced={reduced} />
-      <TerminalPanel reduced={reduced} />
-      <CodeGlyph />
-      <OrbitParticles reduced={reduced} />
+    <group scale={fit} position={[0.1 * fit, 0, 0]}>
+      <group ref={group}>
+        <EditorPanel reduced={reduced} />
+        <TerminalPanel reduced={reduced} />
+        <CodeGlyph />
+        <OrbitParticles reduced={reduced} />
+      </group>
     </group>
   );
 };
