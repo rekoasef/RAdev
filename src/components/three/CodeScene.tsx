@@ -282,15 +282,34 @@ const OrbitParticles = ({ reduced }: { reduced: boolean }) => {
 };
 
 /* ── Guardia de FPS: monitorea en ventanas de 3s; si el equipo no
-   sostiene la escena (sin GPU, batería, etc.), avisa para degradar ── */
-const FpsGuard = ({ onPoor }: { onPoor: () => void }) => {
+   sostiene la escena (sin GPU, batería, etc.), avisa para degradar.
+   `active` es false mientras el render loop está pausado (hero fuera de
+   pantalla); junto con la pestaña oculta, esas pausas reinician la
+   medición: el tiempo en pausa no es lentitud. ── */
+const FpsGuard = ({ onPoor, active }: { onPoor: () => void; active: boolean }) => {
   const frames = useRef(0);
   const windowStart = useRef<number | null>(null);
+  const poorStreak = useRef(0);
+  const resume = useRef(false);
+
+  useEffect(() => {
+    if (active) resume.current = true;
+  }, [active]);
+
+  useEffect(() => {
+    const onVisibility = () => {
+      if (!document.hidden) resume.current = true;
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime;
-    if (windowStart.current === null) {
-      windowStart.current = t + 2; // warmup: ignorar arranque/compilación
+    if (windowStart.current === null || resume.current) {
+      // warmup: 2s al arrancar (compilación de shaders), 0.5s al volver de una pausa
+      windowStart.current = t + (windowStart.current === null ? 2 : 0.5);
+      resume.current = false;
       frames.current = 0;
       return;
     }
@@ -298,7 +317,12 @@ const FpsGuard = ({ onPoor }: { onPoor: () => void }) => {
     frames.current++;
     if (t - windowStart.current >= 3) {
       const fps = frames.current / (t - windowStart.current);
-      if (fps < 22) onPoor();
+      // Degradar solo con dos ventanas lentas seguidas (un tirón aislado no alcanza)
+      poorStreak.current = fps < 22 ? poorStreak.current + 1 : 0;
+      if (poorStreak.current >= 2) {
+        poorStreak.current = 0;
+        onPoor();
+      }
       windowStart.current = t;
       frames.current = 0;
     }
@@ -397,6 +421,7 @@ const CodeScene = () => {
       >
         <FpsGuard
           key={quality}
+          active={visible}
           onPoor={() => setQuality((q) => (q === 'high' ? 'low' : 'off'))}
         />
         <Composition reduced={reduced} pointer={pointer} />
