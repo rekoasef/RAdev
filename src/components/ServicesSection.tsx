@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, TrendingUp, Monitor, Code2 } from 'lucide-react';
+import { Globe, LayoutDashboard, Workflow, ShoppingBag } from 'lucide-react';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import Tilt from '@/components/ui/Tilt';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
@@ -9,26 +9,26 @@ import TerminalPrompt from '@/components/ui/TerminalPrompt';
 const services = [
   {
     icon: Globe,
-    title: "Desarrollo Web",
-    description: "Sitios rápidos, modernos y optimizados para cualquier dispositivo.",
+    title: "Sitios Web",
+    description: "Webs rápidas y a medida que presentan tu negocio y generan consultas desde cualquier dispositivo.",
     highlight: false,
   },
   {
-    icon: TrendingUp,
-    title: "Rendimiento",
-    description: "Webs optimizadas para velocidad, Core Web Vitals y SEO.",
+    icon: LayoutDashboard,
+    title: "Sistemas de Gestión",
+    description: "Plataformas a medida que reemplazan planillas de Excel, con usuarios, permisos y datos en tiempo real.",
     highlight: true,
   },
   {
-    icon: Monitor,
-    title: "UI/UX Moderno",
-    description: "Diseños intuitivos que convierten visitas en clientes.",
+    icon: Workflow,
+    title: "Automatizaciones con IA",
+    description: "Procesos manuales que pasan a hacerse solos: mensajes de WhatsApp, mails, reportes y carga de datos.",
     highlight: false,
   },
   {
-    icon: Code2,
-    title: "Código Limpio",
-    description: "Desarrollo escalable, seguro y mantenible a largo plazo.",
+    icon: ShoppingBag,
+    title: "Catálogos y Tiendas",
+    description: "Tu catálogo online, fácil de actualizar, con consultas y ventas directas por WhatsApp.",
     highlight: false,
   },
 ];
@@ -65,7 +65,7 @@ const ServicesSection = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
         >
           {services.map((service, index) => {
             const Icon = service.icon;

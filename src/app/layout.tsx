@@ -25,9 +25,9 @@ import TimeTracker from "@/components/TimeTracker";
 import MotionProvider from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
-  title: "RA Dev | Desarrollador Web Full-Stack",
+  title: "RAdev | Desarrollo web y sistemas a medida",
   description:
-    "Desarrollador web full-stack especializado en construir sitios y aplicaciones modernas, rápidas y enfocadas en resultados. Next.js, React, TypeScript y más.",
+    "Sitios web, sistemas de gestión a medida y automatizaciones con IA para empresas y emprendedores. Armstrong, Santa Fe.",
 };
 
 export const viewport: Viewport = {

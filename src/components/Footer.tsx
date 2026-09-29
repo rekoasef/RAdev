@@ -38,7 +38,7 @@ const Footer = () => {
             </span>
           </div>
           <p className="text-brand-text-secondary text-sm">
-            &copy; {currentYear} RA Dev. Todos los derechos reservados.
+            &copy; {currentYear} RAdev. Todos los derechos reservados.
           </p>
           <p className="text-brand-text-secondary text-xs">
             Construido con <span className="text-brand-accent font-medium">código eficiente</span> y IA.

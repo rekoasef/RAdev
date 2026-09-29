@@ -28,8 +28,7 @@ export default function PageLoader() {
             {[
               { char: 'R', accent: false },
               { char: 'A', accent: false },
-              { char: '.', accent: true },
-              { char: 'D', accent: true },
+              { char: 'd', accent: true },
               { char: 'e', accent: true },
               { char: 'v', accent: true },
             ].map((item, i) => (

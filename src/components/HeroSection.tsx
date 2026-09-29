@@ -134,7 +134,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 1.0 }}
             className="text-brand-text-secondary text-lg leading-relaxed max-w-[500px]"
           >
-            Ayudo a empresas y emprendedores a construir productos digitales que generan resultados. Código eficiente, diseño impactante.
+            Ayudo a empresas y emprendedores con webs, sistemas de gestión a medida y automatizaciones que ahorran horas de trabajo.
           </motion.p>
 
           {/* CTAs */}
@@ -202,18 +202,6 @@ const HeroSection = () => {
           </div>
 
           {isDesktop && <CodeScene />}
-
-          {/* Badge flotante */}
-          <motion.div
-            animate={{ y: [-6, 6, -6] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute bottom-10 right-4 z-10"
-          >
-            <div className="flex items-center gap-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-full px-4 py-2">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-white/80 text-xs font-medium">Disponible ahora</span>
-            </div>
-          </motion.div>
 
           {/* Badge tech flotante */}
           <motion.div

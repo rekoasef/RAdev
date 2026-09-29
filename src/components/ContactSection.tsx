@@ -1,17 +1,20 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, Clock, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { titleVariants } from '@/utils/animations';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
+
+const WHATSAPP_NUMBER = '5493471343991';
+const whatsappHref = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 
 const contactChannels = [
   {
     icon: FaWhatsapp,
     label: 'WhatsApp',
     value: 'Respuesta inmediata',
-    href: `https://wa.me/5493471343991?text=${encodeURIComponent('Hola, me gustaría tener mi página web')}`,
+    href: whatsappHref('Hola, quiero consultarte por un proyecto'),
   },
   {
     icon: Mail,
@@ -23,7 +26,7 @@ const contactChannels = [
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error' | 'invalid'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,6 +34,10 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!formData.name.trim() || !formData.message.trim()) {
+      setStatus('invalid');
+      return;
+    }
     setStatus('submitting');
     try {
       const response = await fetch('/api/contact', {
@@ -145,7 +152,7 @@ const ContactSection = () => {
                   <input
                     type="text" id="name" name="name"
                     value={formData.name} onChange={handleChange}
-                    required placeholder="Tu nombre"
+                    required maxLength={100} autoComplete="name" placeholder="Tu nombre"
                     className={inputClass}
                   />
                 </div>
@@ -154,7 +161,7 @@ const ContactSection = () => {
                   <input
                     type="email" id="email" name="email"
                     value={formData.email} onChange={handleChange}
-                    required placeholder="tu@email.com"
+                    required maxLength={200} autoComplete="email" placeholder="tu@email.com"
                     className={inputClass}
                   />
                 </div>
@@ -164,7 +171,7 @@ const ContactSection = () => {
                 <textarea
                   id="message" name="message" rows={6}
                   value={formData.message} onChange={handleChange}
-                  required placeholder="Contame sobre tu proyecto..."
+                  required maxLength={5000} placeholder="Contame sobre tu proyecto..."
                   className={inputClass}
                 />
               </div>
@@ -177,16 +184,33 @@ const ContactSection = () => {
               </button>
             </form>
 
-            {status === 'success' && (
-              <p className="mt-5 text-center text-green-400 text-sm font-medium">
-                ✓ ¡Mensaje enviado! Me pondré en contacto pronto.
-              </p>
-            )}
-            {status === 'error' && (
-              <p className="mt-5 text-center text-red-400 text-sm font-medium">
-                Hubo un error al enviar. Por favor intentá de nuevo.
-              </p>
-            )}
+            <div aria-live="polite">
+              {status === 'success' && (
+                <p className="mt-5 flex items-center justify-center gap-2 text-green-400 text-sm font-medium">
+                  <CheckCircle2 size={16} aria-hidden="true" />
+                  ¡Mensaje enviado! Te respondo en menos de 24 hs.
+                </p>
+              )}
+              {status === 'invalid' && (
+                <p className="mt-5 text-center text-red-400 text-sm font-medium">
+                  Completá tu nombre y el mensaje para poder responderte.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="mt-5 text-center text-red-400 text-sm font-medium">
+                  No se pudo enviar el mensaje.{' '}
+                  <a
+                    href={whatsappHref(`Hola, soy ${formData.name.trim()}. ${formData.message.trim()}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-accent underline underline-offset-4 hover:text-[#FF8533]"
+                  >
+                    Mandámelo por WhatsApp
+                  </a>{' '}
+                  o probá de nuevo en un rato.
+                </p>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>

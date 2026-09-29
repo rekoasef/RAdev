@@ -67,7 +67,7 @@ export const projects: Project[] = [
   },
   {
     id: "ra-dev",
-    title: "RA Dev - Mi Marca Personal",
+    title: "RAdev - Mi Marca Personal",
     type: "Caso de Estudio: Plataforma de Marca",
     icon: "Code",
     objective: "Construir la plataforma digital para mi propia marca, demostrando mi metodología de desarrollo ágil asistida por IA.",

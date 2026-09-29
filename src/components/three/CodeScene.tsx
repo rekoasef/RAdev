@@ -30,7 +30,7 @@ const C = {
 
 const CODE_LINES: Seg[][] = [
   [{ t: "const", c: C.keyword }, { t: " dev ", c: C.text }, { t: "= {", c: C.punct }],
-  [{ t: "  nombre", c: C.prop }, { t: ": ", c: C.punct }, { t: "'RA Dev'", c: C.string }, { t: ",", c: C.punct }],
+  [{ t: "  nombre", c: C.prop }, { t: ": ", c: C.punct }, { t: "'RAdev'", c: C.string }, { t: ",", c: C.punct }],
   [{ t: "  stack", c: C.prop }, { t: ": [", c: C.punct }, { t: "'Next.js'", c: C.string }, { t: ", ", c: C.punct }, { t: "'React'", c: C.string }, { t: "],", c: C.punct }],
   [{ t: "  foco", c: C.prop }, { t: ": ", c: C.punct }, { t: "'resultados'", c: C.string }, { t: ",", c: C.punct }],
   [{ t: "  disponible", c: C.prop }, { t: ": ", c: C.punct }, { t: "true", c: C.keyword }, { t: ",", c: C.punct }],

@@ -11,7 +11,7 @@ declare global {
 
 const WhatsAppButton = () => {
   const phoneNumber = "5493471343991";
-  const message = "Hola, me gustaría tener mi página web";
+  const message = "Hola, quiero consultarte por un proyecto";
   const encodedMessage = encodeURIComponent(message);
 
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;

@@ -1,32 +1,29 @@
 "use client";
 import React from 'react';
-import { Zap, DollarSign, Target, BrainCircuit } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants, titleVariants } from '@/utils/animations';
-import SpotlightCard from '@/components/ui/SpotlightCard';
-import Tilt from '@/components/ui/Tilt';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
-const methods = [
+const steps = [
   {
-    icon: Zap,
-    title: "Entrega Rápida",
-    description: "Procesos y herramientas definidos para lanzar tu proyecto en tiempo récord sin comprometer la calidad.",
+    title: "Relevamiento",
+    description: "Hablamos de tu negocio, cómo trabajan hoy y qué querés lograr. Si hay planillas o procesos manuales, los veo de cerca.",
+    result: "Objetivos claros",
   },
   {
-    icon: DollarSign,
-    title: "Inversión Inteligente",
-    description: "Cada funcionalidad tiene un propósito claro. Sin features innecesarias, sin costos extras.",
+    title: "Propuesta y diseño",
+    description: "Te presento qué voy a construir, en qué orden y cuánto sale. Diseñamos juntos las pantallas antes de programar.",
+    result: "Alcance y presupuesto cerrados",
   },
   {
-    icon: Target,
-    title: "Centrado en Resultados",
-    description: "Entiendo tus objetivos antes de escribir una línea de código. El producto está diseñado para tus metas reales.",
+    title: "Desarrollo",
+    description: "Construyo por etapas y te muestro avances reales para que pruebes y opines durante todo el proceso.",
+    result: "Versiones para probar",
   },
   {
-    icon: BrainCircuit,
-    title: "Tecnología Moderna",
-    description: "Uso el stack más actual del mercado para garantizar que tu proyecto sea rápido, seguro y escalable.",
+    title: "Lanzamiento y soporte",
+    description: "Publicamos, capacito a quien lo vaya a usar y sigo disponible para ajustes y mejoras.",
+    result: "En uso desde el día uno",
   },
 ];
 
@@ -45,54 +42,52 @@ const MethodologySection = () => (
           Cómo trabajo
         </h2>
         <p className="text-brand-text-secondary text-lg leading-relaxed">
-          Cada proyecto combina diseño cuidado, código limpio y foco en resultados reales para tu negocio.
+          Cuatro pasos, del primer mensaje a un sistema funcionando. Siempre sabés en qué etapa estamos.
         </p>
       </motion.div>
 
-      {/* Línea conectora que se dibuja al entrar */}
-      <div className="relative">
+      <div className="relative max-w-6xl mx-auto">
+        {/* Línea conectora: horizontal en desktop, vertical en mobile */}
         <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 1.2, ease: 'easeInOut' }}
-          className="absolute -top-6 left-[8%] right-[8%] h-px origin-left bg-gradient-to-r from-transparent via-brand-accent/30 to-transparent hidden lg:block"
+          className="absolute top-5 left-5 right-5 h-px origin-left bg-gradient-to-r from-brand-accent/50 via-brand-accent/25 to-transparent hidden lg:block"
+          aria-hidden="true"
         />
-      </div>
+        <div
+          className="absolute top-5 bottom-5 left-5 w-px bg-gradient-to-b from-brand-accent/50 via-brand-accent/20 to-transparent lg:hidden"
+          aria-hidden="true"
+        />
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-      >
-        {methods.map((method, i) => {
-          const Icon = method.icon;
-          return (
-            <motion.div key={i} variants={itemVariants} className="group h-full">
-              <Tilt className="h-full">
-              <SpotlightCard className="bg-brand-surface border border-brand-border rounded-2xl p-6 text-center transition-all duration-300 group-hover:-translate-y-1 hover:border-brand-accent/20 hover:shadow-accent-glow-sm h-full">
-                <span className="absolute top-4 right-5 text-brand-text-secondary/25 font-display font-bold text-sm select-none" aria-hidden="true">
-                  0{i + 1}
-                </span>
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 * i, ease: "backOut" }}
-                  className="w-14 h-14 rounded-xl bg-brand-accent/[0.08] flex items-center justify-center mx-auto mb-5 group-hover:bg-brand-accent/15 transition-colors duration-300"
-                >
-                  <Icon size={26} className="text-brand-accent" strokeWidth={1.5} />
-                </motion.div>
-                <h3 className="text-lg font-bold font-display text-brand-text-primary mb-2">{method.title}</h3>
-                <p className="text-brand-text-secondary text-sm leading-relaxed">{method.description}</p>
-              </SpotlightCard>
-              </Tilt>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+        <motion.ol
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-4 gap-10 lg:gap-8"
+        >
+          {steps.map((step, i) => (
+            <motion.li
+              key={step.title}
+              variants={itemVariants}
+              className="relative pl-16 lg:pl-0"
+            >
+              <span className="absolute left-0 top-0 lg:static flex items-center justify-center w-10 h-10 rounded-full bg-brand-dark border border-brand-accent/60 text-brand-accent font-display font-bold text-sm tabular-nums lg:mb-6">
+                {i + 1}
+              </span>
+              <h3 className="text-lg font-bold font-display text-brand-text-primary mb-2 lg:pt-0 pt-2">
+                {step.title}
+              </h3>
+              <p className="text-brand-text-secondary text-sm leading-relaxed mb-4 max-w-[46ch]">
+                {step.description}
+              </p>
+              <p className="font-mono text-xs text-brand-accent/90">→ {step.result}</p>
+            </motion.li>
+          ))}
+        </motion.ol>
+      </div>
     </div>
   </section>
 );
