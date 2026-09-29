@@ -3,11 +3,9 @@ import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
 import HeroBackground from "@/components/HeroBackground";
 import CursorGlow from "@/components/ui/CursorGlow";
-import { getAllProjects } from "@/lib/getProjects";
+import { projects } from "@/data/projects";
 
-export default async function AllProjectsPage() {
-  const projects = await getAllProjects();
-
+export default function AllProjectsPage() {
   return (
     <main className="bg-brand-dark min-h-screen flex flex-col relative">
       <CursorGlow />

@@ -135,7 +135,7 @@ const ServicesSection = () => {
           </div>
           <button
             onClick={scrollToContact}
-            className="bg-brand-accent text-white font-bold py-3.5 px-7 rounded-xl text-sm hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
+            className="bg-brand-accent text-brand-dark font-bold py-3.5 px-7 rounded-xl text-sm hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
           >
             Hablemos de tu proyecto →
           </button>

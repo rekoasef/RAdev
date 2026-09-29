@@ -22,6 +22,7 @@ import PageLoader from "@/components/PageLoader";
 import Analytics from "@/components/Analytics";
 import ScrollTracker from "@/components/ScrollTracker";
 import TimeTracker from "@/components/TimeTracker";
+import MotionProvider from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
   title: "RA Dev | Desarrollador Web Full-Stack",
@@ -42,10 +43,12 @@ export default function RootLayout({
     <html lang="es" className={`!scroll-smooth ${exo2.variable} ${openSans.variable}`}>
       <body className="bg-brand-dark text-brand-text-primary antialiased">
 
-        <PageLoader />
-        {children}
+        <MotionProvider>
+          <PageLoader />
+          {children}
 
-        <WhatsAppButton />
+          <WhatsAppButton />
+        </MotionProvider>
 
         {/* 🔥 GOOGLE ANALYTICS BASE */}
         <Script

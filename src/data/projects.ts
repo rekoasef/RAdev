@@ -1,0 +1,96 @@
+import type { IconName } from '@/lib/iconMap';
+
+export interface Project {
+  id: string;
+  title: string;
+  type: string;
+  icon: IconName;
+  objective: string;
+  myRole?: string;
+  techStack: string[];
+  liveUrl?: string;
+  /** Se muestra en la home (Proyectos Destacados). */
+  featured: boolean;
+}
+
+// Orden de aparición = orden del array. Para sumar un proyecto, agregarlo acá.
+export const projects: Project[] = [
+  {
+    id: "lumus",
+    title: "Lumus - Gestor de Gastos con IA",
+    type: "Producto SaaS Propio",
+    icon: "BarChart3",
+    objective: "Darle a cualquier persona en Argentina una forma simple de entender su plata: registrar gastos en segundos y recibir cada mes un informe en lenguaje claro que explica en qué se fue el dinero y cuánto poder adquisitivo se perdió frente al dólar.",
+    myRole: "Fundador y desarrollador integral. Diseñé el producto de punta a punta: registro rápido desde el celular, doble moneda peso/dólar, alertas de presupuesto e informes mensuales generados con la API de Claude (Anthropic). Arquitectura en Next.js con Supabase, monitoreo con Sentry y suscripción paga con 30 días de prueba.",
+    techStack: ["Next.js", "Supabase", "Claude API", "TailwindCSS"],
+    liveUrl: "https://gestorlumus.site",
+    featured: true,
+  },
+  {
+    id: "bossio-monteresino",
+    title: "Bossio Monteresino - Estudio Jurídico",
+    type: "Web Corporativa Profesional",
+    icon: "Scale",
+    objective: "Digitalizar la presencia de un prestigioso estudio jurídico, estableciendo un canal de comunicación formal y transmitiendo solidez y confianza a través de un diseño sobrio y profesional.",
+    myRole: "Dirigí el diseño UX/UI enfocándome en la seriedad institucional. Utilicé herramientas de IA para estructurar el contenido legal y optimizar el SEO. La arquitectura en Next.js garantiza tiempos de carga inmediatos, vitales para la retención de clientes corporativos.",
+    techStack: ["Next.js", "TailwindCSS", "Framer Motion", "EmailJS"],
+    liveUrl: "https://www.bossiomonteresino.com/",
+    featured: true,
+  },
+  {
+    id: "dinfes",
+    title: "Dinfes - Máquinas Hidráulicas",
+    type: "Web Corporativa Industrial",
+    icon: "Wrench",
+    objective: "Presentar a un fabricante de prensas hidráulicas, máquinas especiales y recipientes a presión bajo Norma ASME VIII con un sitio a la altura de su ingeniería, y un catálogo claro para que la industria encuentre la solución que necesita.",
+    myRole: "Diseño y desarrollo completo: catálogo de 9 categorías de productos, secciones de empresa e ingeniería y un recorrido de scroll fluido con animaciones cuidadas, construido sobre Next.js para cargar rápido en cualquier dispositivo.",
+    techStack: ["Next.js", "TailwindCSS", "Framer Motion", "Lenis"],
+    liveUrl: "https://dinfes.vercel.app/",
+    featured: true,
+  },
+  {
+    id: "mimate-bien",
+    title: "Mimate Bien - Tienda de Mates",
+    type: "Catálogo & E-commerce",
+    icon: "Coffee",
+    objective: "Crear una plataforma visual para exhibir un stock variado de productos regionales, facilitando la consulta de disponibilidad y cerrando ventas de forma directa y personalizada vía WhatsApp.",
+    myRole: "Implementé un catálogo autogestionable ligero. La integración estratégica con la API de WhatsApp agilizó el embudo de ventas. Utilicé generación de código asistida para crear rápidamente componentes de galería responsivos.",
+    techStack: ["React", "Vite", "TailwindCSS", "WhatsApp Business API"],
+    liveUrl: "https://www.mimatebien.com/",
+    featured: true,
+  },
+  {
+    id: "ra-dev",
+    title: "RA Dev - Mi Marca Personal",
+    type: "Caso de Estudio: Plataforma de Marca",
+    icon: "Code",
+    objective: "Construir la plataforma digital para mi propia marca, demostrando mi metodología de desarrollo ágil asistida por IA.",
+    myRole: "Desarrollo integral, estrategia de contenido y copywriting. Arquitectura estática con Next.js para máximo rendimiento.",
+    techStack: ["Next.js", "TypeScript", "TailwindCSS", "Vercel"],
+    featured: false,
+  },
+  {
+    id: "iphone-store",
+    title: "iPhone Store - Catálogo Autogestionable",
+    type: "Plataforma de Inventario Web",
+    icon: "Apple",
+    objective: "Empoderar al cliente con una herramienta web intuitiva para que pudiera gestionar su inventario de productos y reseñas en tiempo real.",
+    myRole: "Definí la arquitectura full-stack serverless con Firebase. Supervisé el front-end en React y el panel de control, usando IA para acelerar la lógica de estado.",
+    techStack: ["React", "TailwindCSS", "Firebase", "Vite"],
+    liveUrl: "https://iphone-store-catalogo.web.app/",
+    featured: false,
+  },
+  {
+    id: "seve-photography",
+    title: "Seve Photography - Portfolio de Artista",
+    type: "Portfolio Autogestionable",
+    icon: "Camera",
+    objective: "Proporcionar a la fotógrafa una plataforma visualmente impactante y completamente autogestionable para sus galerías.",
+    myRole: "Estrategia centrada en optimización de imágenes y carga rápida. Integración con Firebase Storage y diseño de transiciones suaves.",
+    techStack: ["React", "Firebase", "TailwindCSS", "Vite"],
+    liveUrl: "https://seve-photography-web.web.app/",
+    featured: false,
+  },
+];
+
+export const featuredProjects = projects.filter((p) => p.featured);

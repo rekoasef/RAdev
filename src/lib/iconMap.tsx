@@ -5,16 +5,8 @@ import {
   Heart, Briefcase, Utensils, Wrench, Palette, Star,
 } from 'lucide-react';
 
-export const ICON_OPTIONS = [
-  'Scale', 'Coffee', 'Apple', 'Camera', 'Code', 'Globe',
-  'Smartphone', 'ShoppingCart', 'BarChart3', 'Database',
-  'Home', 'GraduationCap', 'Heart', 'Briefcase', 'Utensils',
-  'Wrench', 'Palette', 'Star',
-] as const;
 
-export type IconName = typeof ICON_OPTIONS[number];
-
-const iconComponents: Record<string, React.ReactNode> = {
+const iconComponents = {
   Scale: <Scale className="w-12 h-12" />,
   Coffee: <Coffee className="w-12 h-12" />,
   Apple: <Apple className="w-12 h-12" />,
@@ -33,8 +25,10 @@ const iconComponents: Record<string, React.ReactNode> = {
   Wrench: <Wrench className="w-12 h-12" />,
   Palette: <Palette className="w-12 h-12" />,
   Star: <Star className="w-12 h-12" />,
-};
+} satisfies Record<string, React.ReactNode>;
 
-export function getIcon(name: string): React.ReactNode {
-  return iconComponents[name] ?? iconComponents['Code'];
+export type IconName = keyof typeof iconComponents;
+
+export function getIcon(name: IconName): React.ReactNode {
+  return iconComponents[name];
 }

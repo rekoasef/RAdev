@@ -148,7 +148,7 @@ const HeroSection = () => {
               onClick={() => scrollTo('#contact')}
               whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(255,101,0,0.45)' }}
               whileTap={{ scale: 0.96 }}
-              className="bg-brand-accent text-white font-bold py-4 px-8 rounded-xl text-base shadow-lg shadow-brand-accent/25"
+              className="bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-xl text-base shadow-lg shadow-brand-accent/25"
             >
               Trabajemos juntos
             </motion.button>

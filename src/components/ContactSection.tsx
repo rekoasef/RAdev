@@ -171,7 +171,7 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full bg-brand-accent text-white font-bold py-4 px-8 rounded-xl text-base hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                className="w-full bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-xl text-base hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
               >
                 {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje →'}
               </button>

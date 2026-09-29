@@ -5,12 +5,13 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Code2 } from 'lucide-react';
 import Image from 'next/image';
 import { containerVariants, titleVariants, itemVariants } from '@/utils/animations';
-import { projects } from '@/data/projects';
+import { featuredProjects, type Project } from '@/data/projects';
+import { getIcon } from '@/lib/iconMap';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import Tilt from '@/components/ui/Tilt';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
-const ProjectCard = ({ project }: { project: (typeof projects)[0] }) => (
+const ProjectCard = ({ project }: { project: Project }) => (
   <motion.div variants={itemVariants} className="group h-full">
     <Tilt className="h-full" max={5}>
     <SpotlightCard
@@ -19,7 +20,7 @@ const ProjectCard = ({ project }: { project: (typeof projects)[0] }) => (
     >
     <div className="flex items-start justify-between mb-5">
       <div className="w-12 h-12 rounded-xl bg-brand-accent/[0.08] flex items-center justify-center text-brand-accent group-hover:bg-brand-accent/15 transition-colors duration-300">
-        {project.icon}
+        {getIcon(project.icon)}
       </div>
       <span className="text-xs font-semibold text-brand-text-secondary bg-brand-surface-2 px-2.5 py-1 rounded-full border border-brand-border">
         {project.type}
@@ -31,13 +32,13 @@ const ProjectCard = ({ project }: { project: (typeof projects)[0] }) => (
 
     <div className="mt-auto space-y-4">
       <div className="flex flex-wrap gap-1.5">
-        {project.supervisedTech.map(tech => (
+        {project.techStack.map(tech => (
           <span key={tech} className="bg-brand-dark text-brand-text-secondary text-xs font-medium px-2.5 py-1 rounded-full border border-brand-border">
             {tech}
           </span>
         ))}
       </div>
-      {project.liveUrl && project.liveUrl !== '#' && (
+      {project.liveUrl && (
         <a
           href={project.liveUrl}
           target="_blank"
@@ -90,7 +91,7 @@ const ProjectsSection = () => (
         viewport={{ once: true, amount: 0.1 }}
         className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto"
       >
-        {projects.map(project => (
+        {featuredProjects.map(project => (
           <ProjectCard project={project} key={project.id} />
         ))}
       </motion.div>
@@ -104,7 +105,7 @@ const ProjectsSection = () => (
       >
         <Link
           href="/proyectos"
-          className="inline-flex items-center gap-2 border border-brand-accent/50 text-brand-accent font-bold py-3 px-8 rounded-xl text-sm hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all duration-300"
+          className="inline-flex items-center gap-2 border border-brand-accent/50 text-brand-accent font-bold py-3 px-8 rounded-xl text-sm hover:bg-brand-accent hover:text-brand-dark hover:border-brand-accent transition-all duration-300"
         >
           <Code2 size={16} /> Ver todos los proyectos
         </Link>

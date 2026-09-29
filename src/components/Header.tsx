@@ -19,6 +19,7 @@ const navItems = [
   { label: 'Servicios', selector: '#services' },
   { label: 'Método', selector: '#methodology' },
   { label: 'Proyectos', selector: '#projects' },
+  { label: 'Sistemas', selector: '#sistemas' },
   { label: 'Stack', selector: '#tech-stack' },
 ];
 
@@ -53,7 +54,7 @@ const NavLinks = ({ onLinkClick }: { onLinkClick?: () => void }) => {
       <motion.li variants={{ hidden: { y: -20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
         <button
           onClick={() => handleNavigation('#contact')}
-          className="bg-brand-accent text-white py-2 px-5 rounded-lg text-sm font-bold hover:bg-[#E55A00] hover:shadow-accent-glow-sm transition-all duration-300"
+          className="bg-brand-accent text-brand-dark py-2 px-5 rounded-lg text-sm font-bold hover:bg-[#E55A00] hover:shadow-accent-glow-sm transition-all duration-300"
         >
           Contactar
         </button>
@@ -76,6 +77,19 @@ const Header = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Menú mobile abierto: cerrar con Escape y bloquear el scroll de fondo.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false);
+    document.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isOpen]);
 
   return (
     <motion.header
@@ -111,7 +125,12 @@ const Header = () => {
 
         {/* Mobile toggle */}
         <div className="md:hidden">
-          <button onClick={toggleMenu} aria-label="Abrir menú" className="text-white">
+          <button
+            onClick={toggleMenu}
+            aria-label="Abrir menú"
+            aria-expanded={isOpen}
+            className="text-white p-2.5 -mr-2.5"
+          >
             <Menu className="w-6 h-6" />
           </button>
         </div>
@@ -129,7 +148,7 @@ const Header = () => {
               <div className="container mx-auto px-6 h-full flex flex-col">
                 <div className="flex justify-between items-center py-4">
                   <Logo />
-                  <button onClick={toggleMenu} aria-label="Cerrar menú">
+                  <button onClick={toggleMenu} aria-label="Cerrar menú" className="p-2 -mr-2">
                     <X className="text-white w-7 h-7" />
                   </button>
                 </div>
