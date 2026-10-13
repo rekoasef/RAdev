@@ -7,21 +7,21 @@ import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
 const AboutSection = () => (
   <section id="about" className="relative bg-brand-dark overflow-hidden py-24 lg:py-32">
-    <div className="container mx-auto px-6 grid lg:grid-cols-[minmax(0,1fr)_auto] gap-10 lg:gap-16 items-center">
-      {/* Retrato con tamaño acotado: nunca se estira más allá de su resolución real */}
+    <div className="max-w-5xl mx-auto px-6 grid lg:grid-cols-[minmax(0,1fr)_380px] gap-12 lg:gap-16 items-center">
+      {/* Retrato con bordes nítidos y tamaño acotado: nunca se estira más allá de su resolución real */}
       <motion.div
         initial={{ opacity: 0, scale: 1.03 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        className="portrait-fade relative w-full max-w-[400px] lg:w-[440px] lg:max-w-none aspect-[4/5] mx-auto lg:order-2"
+        className="relative w-full max-w-[380px] aspect-[4/5] mx-auto lg:order-2 rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]"
       >
         <Image
           src="/images/renzo-retrato.webp"
           alt="Renzo Asef, desarrollador detrás de RAdev"
           fill
-          quality={90}
-          sizes="(min-width: 1024px) 440px, 400px"
+          quality={95}
+          sizes="380px"
           className="object-cover object-top"
         />
       </motion.div>

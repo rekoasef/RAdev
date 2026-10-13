@@ -49,14 +49,6 @@
     animation-play-state: paused;
   }
 
-  /* Retrato de "Sobre mí": bordes inferior y laterales se funden con el fondo */
-  .portrait-fade {
-    mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 70%, transparent 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 70%, transparent 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-    mask-composite: intersect;
-    -webkit-mask-composite: source-in;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .animate-marquee,
     .animate-marquee-reverse {
