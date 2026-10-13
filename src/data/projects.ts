@@ -80,7 +80,7 @@ export const projects: Project[] = [
       { src: "/images/projects/seve-carrito.webp", alt: "Carrito de Sève en el celular con pedido por WhatsApp" },
       { src: "/images/projects/seve-portada.webp", alt: "Portada de Sève en una laptop" },
     ],
-    featured: false,
+    featured: true,
   },
   {
     id: "ra-dev",

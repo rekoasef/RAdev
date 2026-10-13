@@ -12,18 +12,40 @@ import Tilt from '@/components/ui/Tilt';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
 import BrowserPreview from '@/components/ui/BrowserPreview';
 
-const ProjectCard = ({ project }: { project: Project }) => (
-  <motion.div variants={itemVariants} className="group h-full">
+// Proyectos con mockups 4:5: dos lado a lado llenan exacto el formato 16:10 de las capturas.
+const GalleryPreview = ({ project }: { project: Project }) => (
+  <div className="grid grid-cols-2 aspect-[16/10] overflow-hidden rounded-t-2xl">
+    {project.gallery!.slice(0, 2).map((img) => (
+      <div key={img.src} className="relative overflow-hidden">
+        <Image
+          src={img.src}
+          alt={img.alt}
+          fill
+          quality={90}
+          sizes="(min-width: 768px) 250px, 50vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+        />
+      </div>
+    ))}
+  </div>
+);
+
+const ProjectCard = ({ project, className = '' }: { project: Project; className?: string }) => (
+  <motion.div variants={itemVariants} className={`group h-full ${className}`}>
     <Tilt className="h-full" max={5}>
     <SpotlightCard
       className="bg-brand-surface border border-brand-border rounded-2xl h-full transition-all duration-300 hover:border-brand-accent/25 group-hover:-translate-y-1 hover:shadow-accent-glow-sm"
       contentClassName="flex flex-col"
     >
-    {project.image ? <BrowserPreview project={{ ...project, image: project.image }} /> : null}
+    {project.image ? (
+      <BrowserPreview project={{ ...project, image: project.image }} />
+    ) : project.gallery?.length ? (
+      <GalleryPreview project={project} />
+    ) : null}
 
     <div className="flex flex-col flex-grow p-7">
     <div className="flex items-start justify-between gap-4 mb-3">
-      {!project.image && (
+      {!project.image && !project.gallery?.length && (
         <div className="w-12 h-12 rounded-xl bg-brand-accent/[0.08] flex items-center justify-center text-brand-accent">
           {getIcon(project.icon)}
         </div>
@@ -98,8 +120,17 @@ const ProjectsSection = () => (
         viewport={{ once: true, amount: 0.1 }}
         className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto"
       >
-        {featuredProjects.map(project => (
-          <ProjectCard project={project} key={project.id} />
+        {featuredProjects.map((project, i) => (
+          <ProjectCard
+            project={project}
+            key={project.id}
+            // Con cantidad impar, la última card queda centrada en vez de sola a la izquierda.
+            className={
+              featuredProjects.length % 2 === 1 && i === featuredProjects.length - 1
+                ? 'md:col-span-2 md:w-[calc(50%-0.625rem)] md:mx-auto'
+                : ''
+            }
+          />
         ))}
       </motion.div>
 
