@@ -1,135 +1,112 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, LayoutDashboard, Workflow, ShoppingBag } from 'lucide-react';
-import SpotlightCard from '@/components/ui/SpotlightCard';
-import Tilt from '@/components/ui/Tilt';
+import { ArrowUpRight } from 'lucide-react';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
 const services = [
   {
-    icon: Globe,
     title: "Sitios Web",
     description: "Webs rápidas y a medida que presentan tu negocio y generan consultas desde cualquier dispositivo.",
-    highlight: false,
+    tags: ["Institucionales", "Landing pages", "SEO"],
   },
   {
-    icon: LayoutDashboard,
     title: "Sistemas de Gestión",
     description: "Plataformas a medida que reemplazan planillas de Excel, con usuarios, permisos y datos en tiempo real.",
-    highlight: true,
+    tags: ["Paneles", "Stock y pedidos", "Reportes"],
   },
   {
-    icon: Workflow,
     title: "Automatizaciones con IA",
     description: "Procesos manuales que pasan a hacerse solos: mensajes de WhatsApp, mails, reportes y carga de datos.",
-    highlight: false,
+    tags: ["WhatsApp", "Mails", "Carga de datos"],
   },
   {
-    icon: ShoppingBag,
     title: "Catálogos y Tiendas",
     description: "Tu catálogo online, fácil de actualizar, con consultas y ventas directas por WhatsApp.",
-    highlight: false,
+    tags: ["Autogestionable", "Ventas por WhatsApp"],
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+const rowVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
 const ServicesSection = () => {
   const scrollToContact = () => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section id="services" className="bg-brand-dark py-20 overflow-x-hidden">
-      <div className="container mx-auto px-6">
+    <section id="services" className="bg-brand-dark py-24 overflow-x-hidden">
+      <div className="container mx-auto px-6 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-20">
 
-        {/* Header */}
+        {/* Encabezado: fijo a la izquierda en desktop mientras se recorre la lista */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="lg:sticky lg:top-28 lg:self-start"
         >
           <TerminalPrompt command="radev --servicios" />
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-brand-text-primary">
-            Qué puedo hacer por tu negocio
+          <h2 className="text-3xl md:text-5xl font-bold font-display text-brand-text-primary tracking-tight leading-[1.1]">
+            Qué puedo hacer<br className="hidden md:block" /> por tu negocio
           </h2>
-        </motion.div>
-
-        {/* 4 Service Cards */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
-        >
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div key={index} variants={cardVariants} className="group">
-                <Tilt className="h-full">
-                <SpotlightCard
-                  className={`p-6 rounded-2xl border transition-all duration-300 cursor-default h-full
-                    ${service.highlight
-                      ? 'bg-brand-accent/[0.08] border-brand-accent/30 shadow-lg shadow-brand-accent/[0.08]'
-                      : 'bg-brand-surface border-brand-border hover:border-brand-accent/20 hover:bg-[#181818] group-hover:-translate-y-1'
-                    }`}
-                >
-                  <div className={`mb-5 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110
-                    ${service.highlight ? 'bg-brand-accent/20' : 'bg-brand-accent/[0.08] group-hover:bg-brand-accent/15'}`}
-                  >
-                    <Icon size={22} className="text-brand-accent" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-brand-text-primary font-bold font-display text-lg mb-2">{service.title}</h3>
-                  <p className="text-brand-text-secondary text-sm leading-relaxed">{service.description}</p>
-                  <div className="flex gap-1.5 mt-6">
-                    {[0, 1, 2].map(i => (
-                      <div
-                        key={i}
-                        className={`w-1.5 h-1.5 rounded-full transition-colors duration-300
-                          ${service.highlight
-                            ? 'bg-brand-accent'
-                            : i === 0
-                            ? 'bg-brand-accent/50 group-hover:bg-brand-accent'
-                            : 'bg-[#333] group-hover:bg-brand-accent/30'
-                          }`}
-                      />
-                    ))}
-                  </div>
-                </SpotlightCard>
-                </Tilt>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.7 }}
-          className="bg-brand-surface border border-brand-border rounded-2xl px-6 md:px-10 py-6 flex flex-wrap items-center justify-between gap-6"
-        >
-          <div>
-            <p className="text-lg md:text-xl font-bold font-display text-brand-text-primary">
-              ¿Tenés un proyecto en mente?
-            </p>
-            <p className="text-brand-text-secondary text-sm mt-1">
-              Contame qué necesitás y te respondo en menos de 24 hs.
-            </p>
-          </div>
+          <p className="text-brand-text-secondary text-lg leading-relaxed mt-5 max-w-md">
+            Desde tu primera web hasta el sistema con el que manejás el día a día.
+            ¿Tenés un proyecto en mente? Te respondo en menos de 24 hs.
+          </p>
           <button
             onClick={scrollToContact}
-            className="bg-brand-accent text-brand-dark font-bold py-3.5 px-7 rounded-xl text-sm hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
+            className="mt-8 inline-flex items-center gap-2 bg-brand-accent text-brand-dark font-bold py-3.5 px-7 rounded-xl text-sm hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300"
           >
-            Hablemos de tu proyecto →
+            Hablemos de tu proyecto
+            <ArrowUpRight size={16} strokeWidth={2.5} />
           </button>
         </motion.div>
+
+        {/* Lista numerada */}
+        <motion.ol
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+          className="border-t border-white/[0.08]"
+        >
+          {services.map((service, i) => (
+            <motion.li
+              key={service.title}
+              variants={rowVariants}
+              className="group relative grid grid-cols-[auto_1fr] gap-x-6 md:gap-x-10 py-8 md:py-10 border-b border-white/[0.08]"
+            >
+              {/* Barra de acento que crece al pasar el mouse */}
+              <span
+                aria-hidden="true"
+                className="absolute left-0 bottom-[-1px] h-px w-full origin-left scale-x-0 bg-brand-accent transition-transform duration-500 ease-out group-hover:scale-x-100"
+              />
+              <span className="font-mono text-sm text-brand-text-secondary pt-2 tabular-nums transition-colors duration-300 group-hover:text-brand-accent">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold font-display text-brand-text-primary tracking-tight transition-transform duration-300 ease-out group-hover:translate-x-1">
+                  {service.title}
+                </h3>
+                <p className="text-brand-text-secondary leading-relaxed mt-3 max-w-[52ch]">
+                  {service.description}
+                </p>
+                <ul className="flex flex-wrap gap-2 mt-5">
+                  {service.tags.map(tag => (
+                    <li
+                      key={tag}
+                      className="font-mono text-xs text-brand-text-secondary border border-white/[0.08] rounded-full px-3 py-1 transition-colors duration-300 group-hover:border-brand-accent/30 group-hover:text-brand-text-primary"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.li>
+          ))}
+        </motion.ol>
 
       </div>
     </section>

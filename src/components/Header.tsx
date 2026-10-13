@@ -16,6 +16,7 @@ const Logo = () => (
 );
 
 const navItems = [
+  { label: 'Sobre mí', selector: '#about' },
   { label: 'Servicios', selector: '#services' },
   { label: 'Método', selector: '#methodology' },
   { label: 'Proyectos', selector: '#projects' },
