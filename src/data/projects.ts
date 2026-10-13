@@ -70,11 +70,11 @@ export const projects: Project[] = [
   {
     id: "seve",
     title: "Sève - Tienda de Skincare",
-    type: "Proyecto propio · En desarrollo",
+    type: "Proyecto de muestra · E-commerce",
     icon: "ShoppingCart",
-    objective: "Una tienda online de cosmética natural con identidad de marca propia: estética editorial, fotografía cálida y una compra simple que termina en un pedido por WhatsApp.",
-    myRole: "Proyecto propio para explorar e-commerce de marca. Diseño de identidad, dirección de arte y desarrollo: catálogo con filtros por tipo y categoría, búsqueda y orden, carrito pensado para el celular y un journal con el contenido de la marca.",
-    techStack: [],
+    objective: "E-commerce para una marca ficticia de skincare, haircare y body care con estética editorial y cálida. El cliente arma su pedido en el sitio y lo envía por WhatsApp con el mensaje ya escrito: sin pasarela de pago, todo se coordina por chat.",
+    myRole: "Diseño de identidad y desarrollo completo. Catálogo de 14 productos con filtros por colección, tipo, momento del día, precio y novedades: cada opción muestra cuántos resultados da, los filtros quedan en la URL y la búsqueda funciona sin tildes. Vista rápida, bolsa que se guarda en el navegador, navegación por teclado y respeto por la preferencia de menos animaciones.",
+    techStack: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS 4"],
     gallery: [
       { src: "/images/projects/seve-catalogo.webp", alt: "Catálogo de Sève con filtros y productos en un monitor" },
       { src: "/images/projects/seve-carrito.webp", alt: "Carrito de Sève en el celular con pedido por WhatsApp" },
