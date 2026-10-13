@@ -6,31 +6,32 @@ import { titleVariants } from '@/utils/animations';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
 
 const AboutSection = () => (
-  <section id="about" className="relative bg-brand-dark overflow-hidden">
-    {/* Retrato: a la derecha en desktop, arriba en mobile */}
-    <motion.div
-      initial={{ opacity: 0, scale: 1.04 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-      className="portrait-fade relative h-[420px] sm:h-[520px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[52%]"
-    >
-      <Image
-        src="/images/renzo-retrato.webp"
-        alt="Renzo Asef, desarrollador detrás de RAdev"
-        fill
-        sizes="(min-width: 1024px) 52vw, 100vw"
-        className="object-cover object-top brightness-90"
-      />
-    </motion.div>
+  <section id="about" className="relative bg-brand-dark overflow-hidden py-24 lg:py-32">
+    <div className="container mx-auto px-6 grid lg:grid-cols-[minmax(0,1fr)_auto] gap-10 lg:gap-16 items-center">
+      {/* Retrato con tamaño acotado: nunca se estira más allá de su resolución real */}
+      <motion.div
+        initial={{ opacity: 0, scale: 1.03 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        className="portrait-fade relative w-full max-w-[400px] lg:w-[440px] lg:max-w-none aspect-[4/5] mx-auto lg:order-2"
+      >
+        <Image
+          src="/images/renzo-retrato.webp"
+          alt="Renzo Asef, desarrollador detrás de RAdev"
+          fill
+          quality={90}
+          sizes="(min-width: 1024px) 440px, 400px"
+          className="object-cover object-top"
+        />
+      </motion.div>
 
-    <div className="relative container mx-auto px-6 -mt-24 pb-24 lg:mt-0 lg:py-32 lg:min-h-[720px] lg:flex lg:items-center">
       <motion.div
         variants={titleVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.4 }}
-        className="max-w-xl"
+        className="max-w-xl lg:order-1"
       >
         <TerminalPrompt command="whoami" />
         <h2 className="text-3xl md:text-5xl font-bold font-display text-brand-text-primary tracking-tight">
