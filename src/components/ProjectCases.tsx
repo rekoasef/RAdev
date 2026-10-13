@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { projects, type Project } from '@/data/projects';
@@ -26,6 +27,39 @@ const IconPreview = ({ project }: { project: Project }) => (
   </div>
 );
 
+// Mockups 4:5: el primero grande a la izquierda, los otros dos apilados a la derecha.
+const Gallery = ({ images }: { images: NonNullable<Project['gallery']> }) => {
+  const [main, ...rest] = images;
+  return (
+    <div className="grid grid-cols-[2fr_1fr] gap-3">
+      <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-brand-border">
+        <Image
+          src={main.src}
+          alt={main.alt}
+          fill
+          quality={90}
+          sizes="(min-width: 768px) 400px, 66vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+        />
+      </div>
+      <div className="grid grid-rows-2 gap-3">
+        {rest.slice(0, 2).map((img) => (
+          <div key={img.src} className="relative rounded-xl overflow-hidden border border-brand-border">
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              quality={90}
+              sizes="(min-width: 768px) 200px, 33vw"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ProjectCase = ({ project }: { project: Project }) => (
   <motion.article
     initial={{ opacity: 0, y: 24 }}
@@ -34,7 +68,9 @@ const ProjectCase = ({ project }: { project: Project }) => (
     transition={{ duration: 0.6, ease: 'easeOut' }}
     className="group grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-12 items-center py-12 md:py-16 border-t border-brand-border first:border-t-0 first:pt-0"
   >
-    {project.image ? (
+    {project.gallery?.length ? (
+      <Gallery images={project.gallery} />
+    ) : project.image ? (
       <div className="rounded-xl overflow-hidden border border-brand-border transition-colors duration-300 group-hover:border-brand-accent/25">
         <BrowserPreview
           project={{ ...project, image: project.image }}
@@ -61,7 +97,7 @@ const ProjectCase = ({ project }: { project: Project }) => (
         </div>
       )}
 
-      <TechList tech={project.techStack} />
+      {project.techStack.length > 0 && <TechList tech={project.techStack} />}
 
       {project.liveUrl && (
         <a

@@ -11,6 +11,8 @@ export interface Project {
   liveUrl?: string;
   /** Captura del sitio (16:10) en /public. */
   image?: string;
+  /** Mockups 4:5 con su propio dispositivo y fondo: reemplazan a la captura en /proyectos. */
+  gallery?: { src: string; alt: string }[];
   /** Se muestra en la home (Proyectos Destacados). */
   featured: boolean;
 }
@@ -64,6 +66,21 @@ export const projects: Project[] = [
     liveUrl: "https://www.mimatebien.com/",
     image: "/images/projects/mimate-bien.webp",
     featured: true,
+  },
+  {
+    id: "seve",
+    title: "Sève - Tienda de Skincare",
+    type: "Proyecto propio · En desarrollo",
+    icon: "ShoppingCart",
+    objective: "Una tienda online de cosmética natural con identidad de marca propia: estética editorial, fotografía cálida y una compra simple que termina en un pedido por WhatsApp.",
+    myRole: "Proyecto propio para explorar e-commerce de marca. Diseño de identidad, dirección de arte y desarrollo: catálogo con filtros por tipo y categoría, búsqueda y orden, carrito pensado para el celular y un journal con el contenido de la marca.",
+    techStack: [],
+    gallery: [
+      { src: "/images/projects/seve-catalogo.webp", alt: "Catálogo de Sève con filtros y productos en un monitor" },
+      { src: "/images/projects/seve-carrito.webp", alt: "Carrito de Sève en el celular con pedido por WhatsApp" },
+      { src: "/images/projects/seve-portada.webp", alt: "Portada de Sève en una laptop" },
+    ],
+    featured: false,
   },
   {
     id: "ra-dev",
