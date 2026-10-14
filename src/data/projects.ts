@@ -83,6 +83,18 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: "maison-elan",
+    title: "Maison Élan - Tienda de Moda Femenina",
+    type: "Proyecto de muestra · E-commerce",
+    icon: "ShoppingCart",
+    objective: "Tienda online para una marca ficticia de moda femenina contemporánea: básicos elegantes, sastrería, tejidos, carteras y accesorios con una estética editorial en tonos marfil, arena y espresso. El pedido se arma en el sitio y se envía por WhatsApp con todos los datos, sin pasarela de pago.",
+    myRole: "Diseño y desarrollo completo. Catálogo de 26 prendas con filtros por categoría, colección, precio, talle y color, y cinco formas de ordenar. Ficha de producto con selección de color y talle, guía de talles y productos relacionados. Bolsa y favoritos que se guardan en el navegador, checkout con validación que arma el mensaje de WhatsApp y alternativa si el navegador bloquea la ventana. Todo en español rioplatense y respetando la preferencia de menos animaciones.",
+    techStack: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS 4", "Zustand"],
+    liveUrl: "https://maison-elan-peach.vercel.app",
+    image: "/images/projects/maison-elan.webp",
+    featured: true,
+  },
+  {
     id: "ra-dev",
     title: "RAdev - Mi Marca Personal",
     type: "Caso de Estudio: Plataforma de Marca",
