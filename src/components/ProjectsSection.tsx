@@ -1,8 +1,8 @@
 "use client";
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ExternalLink, Code2 } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ExternalLink, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { containerVariants, titleVariants, itemVariants } from '@/utils/animations';
 import { featuredProjects, type Project } from '@/data/projects';
@@ -31,7 +31,7 @@ const GalleryPreview = ({ project }: { project: Project }) => (
 );
 
 const ProjectCard = ({ project, className = '' }: { project: Project; className?: string }) => (
-  <motion.div variants={itemVariants} className={`group h-full ${className}`}>
+  <motion.div variants={itemVariants} className={`group ${className}`}>
     <Tilt className="h-full" max={5}>
     <SpotlightCard
       className="bg-brand-surface border border-brand-border rounded-2xl h-full transition-all duration-300 hover:border-brand-accent/25 group-hover:-translate-y-1 hover:shadow-accent-glow-sm"
@@ -83,6 +83,112 @@ const ProjectCard = ({ project, className = '' }: { project: Project; className?
   </motion.div>
 );
 
+// Carrusel con scroll-snap nativo: la card siguiente queda asomada para que se note que hay más.
+const ProjectsCarousel = ({ projects }: { projects: Project[] }) => {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  const step = () => {
+    const track = trackRef.current;
+    const card = track?.firstElementChild as HTMLElement | null;
+    if (!track || !card) return 0;
+    return card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || '0');
+  };
+
+  const update = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const s = step();
+    const end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    // Al final se ven varias cards a la vez y el scroll no llega a la última: se marca la última igual.
+    setIndex(end ? track.children.length - 1 : s ? Math.round(track.scrollLeft / s) : 0);
+    setAtStart(track.scrollLeft <= 4);
+    setAtEnd(end);
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    update();
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      track.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [update]);
+
+  const scrollByCards = (dir: 1 | -1) =>
+    trackRef.current?.scrollBy({ left: dir * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+
+  const goTo = (i: number) =>
+    trackRef.current?.scrollTo({ left: i * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+
+  const fadeMask = `linear-gradient(to right, ${atStart ? '#000' : 'transparent'}, #000 4%, #000 92%, ${atEnd ? '#000' : 'transparent'})`;
+
+  const arrowClass =
+    'grid place-items-center w-11 h-11 rounded-full border border-brand-border bg-brand-surface text-brand-text-primary transition-all duration-300 hover:border-brand-accent/50 hover:text-brand-accent disabled:opacity-30 disabled:pointer-events-none';
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      <motion.div
+        ref={trackRef}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        role="region"
+        aria-roledescription="carrusel"
+        aria-label="Proyectos destacados"
+        tabIndex={0}
+        // El padding vertical deja lugar al hover (sube 4px) y a la sombra sin que el scroll los recorte.
+        className="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-none py-4 -my-4 px-1 -mx-1"
+        // Desvanecido en el borde que tiene más cards; se apaga al llegar a ese extremo.
+        style={{ maskImage: fadeMask, WebkitMaskImage: fadeMask }}
+      >
+        {projects.map((project) => (
+          <ProjectCard
+            project={project}
+            key={project.id}
+            className="snap-start shrink-0 w-[85%] sm:w-[60%] md:w-[calc((100%-1.25rem)/2.3)]"
+          />
+        ))}
+      </motion.div>
+
+      <div className="mt-8 flex items-center justify-between gap-6">
+        <div className="flex items-center gap-2" aria-label="Elegir proyecto">
+          {projects.map((p, i) => (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => goTo(i)}
+              aria-label={`Ir a ${p.title}`}
+              aria-current={i === index}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index ? 'w-8 bg-brand-accent' : 'w-1.5 bg-brand-border hover:bg-brand-text-secondary'
+              }`}
+            />
+          ))}
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-xs text-brand-text-secondary tabular-nums" aria-live="polite">
+            {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+          </span>
+          <button type="button" onClick={() => scrollByCards(-1)} disabled={atStart} aria-label="Proyecto anterior" className={arrowClass}>
+            <ChevronLeft size={18} />
+          </button>
+          <button type="button" onClick={() => scrollByCards(1)} disabled={atEnd} aria-label="Proyecto siguiente" className={arrowClass}>
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ProjectsSection = () => (
   <section id="projects" className="relative bg-brand-dark py-24 overflow-hidden">
 
@@ -113,26 +219,7 @@ const ProjectsSection = () => (
         </h2>
       </motion.div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto"
-      >
-        {featuredProjects.map((project, i) => (
-          <ProjectCard
-            project={project}
-            key={project.id}
-            // Con cantidad impar, la última card queda centrada en vez de sola a la izquierda.
-            className={
-              featuredProjects.length % 2 === 1 && i === featuredProjects.length - 1
-                ? 'md:col-span-2 md:w-[calc(50%-0.625rem)] md:mx-auto'
-                : ''
-            }
-          />
-        ))}
-      </motion.div>
+      <ProjectsCarousel projects={featuredProjects} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

@@ -5,6 +5,7 @@ import { Mail, MapPin, Clock, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { titleVariants } from '@/utils/animations';
 import TerminalPrompt from '@/components/ui/TerminalPrompt';
+import Magnet from '@/components/ui/Magnet';
 
 const WHATSAPP_NUMBER = '5493471343991';
 const whatsappHref = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -175,13 +176,15 @@ const ContactSection = () => {
                   className={inputClass}
                 />
               </div>
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="w-full bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-xl text-base hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-              >
-                {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje →'}
-              </button>
+              <Magnet padding={40} magnetStrength={10} maxOffset={6} style={{ display: 'block' }}>
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="w-full bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-xl text-base hover:bg-[#E55A00] hover:shadow-accent-glow hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                >
+                  {status === 'submitting' ? 'Enviando...' : 'Enviar Mensaje →'}
+                </button>
+              </Magnet>
             </form>
 
             <div aria-live="polite">

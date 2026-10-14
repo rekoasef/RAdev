@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Counter from '@/components/ui/Counter';
+import RotatingText from '@/components/ui/RotatingText';
+import Magnet from '@/components/ui/Magnet';
 
 // La escena 3D (three.js) se carga lazy: no bloquea el primer render.
 // Mientras baja el bundle, se muestra un glow CSS como placeholder.
@@ -47,15 +49,11 @@ const HeroSection = () => {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  const allWords = [
-    { text: 'Desarrollo', accent: false },
-    { text: 'experiencias', accent: false },
-    { text: 'web', accent: false, break: true },
-    { text: 'modernas,', accent: true },
-    { text: 'rápidas', accent: true },
-    { text: 'y', accent: false },
-    { text: 'escalables.', accent: false },
-  ];
+  // Lo que rota en el titular: los tres servicios. Los adjetivos de abajo son
+  // neutros en género para que concuerden con cualquiera de las tres palabras.
+  const services = ['webs', 'sistemas', 'automatizaciones'];
+  const tailWords = ['a', 'medida,', 'veloces', 'y', 'escalables.'];
+  const reduceMotion = useReducedMotion();
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden bg-brand-dark">
@@ -111,19 +109,32 @@ const HeroSection = () => {
 
           {/* H1 — entrada palabra por palabra */}
           <h1 className="text-[2.8rem] md:text-[3.5rem] xl:text-[4rem] font-bold font-display leading-[1.08] tracking-tight">
-            {allWords.map((w, i) => (
-              <React.Fragment key={i}>
-                {w.break && <br className="hidden sm:block" />}
-                <motion.span
-                  custom={i}
-                  variants={wordVariant}
-                  initial="hidden"
-                  animate="visible"
-                  className={`inline-block mr-[0.22em] ${w.accent ? 'text-brand-accent' : 'text-white'}`}
-                >
-                  {w.text}
-                </motion.span>
-              </React.Fragment>
+            <motion.span custom={0} variants={wordVariant} initial="hidden" animate="visible" className="inline-block text-white">
+              Desarrollo
+            </motion.span>
+            {/* En su propia línea: el cambio de ancho no mueve el resto del título.
+                El tamaño se achica con el viewport para que "automatizaciones" entre en mobile y en lg. */}
+            <motion.span custom={1} variants={wordVariant} initial="hidden" animate="visible" className="block text-brand-accent text-[length:min(1em,10vw)] lg:text-[length:min(1em,5.3vw)]">
+              <RotatingText
+                texts={services}
+                auto={!reduceMotion}
+                rotationInterval={2600}
+                staggerDuration={0.02}
+                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                mainClassName="overflow-hidden pb-[0.1em] -mb-[0.1em]"
+              />
+            </motion.span>
+            {tailWords.map((w, i) => (
+              <motion.span
+                key={w}
+                custom={i + 2}
+                variants={wordVariant}
+                initial="hidden"
+                animate="visible"
+                className="inline-block mr-[0.22em] text-white"
+              >
+                {w}
+              </motion.span>
             ))}
           </h1>
 
@@ -144,14 +155,16 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 1.2 }}
             className="flex flex-wrap gap-4 pt-1"
           >
-            <motion.button
-              onClick={() => scrollTo('#contact')}
-              whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(255,101,0,0.45)' }}
-              whileTap={{ scale: 0.96 }}
-              className="bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-xl text-base shadow-lg shadow-brand-accent/25"
-            >
-              Trabajemos juntos
-            </motion.button>
+            <Magnet padding={60} magnetStrength={4} maxOffset={10}>
+              <motion.button
+                onClick={() => scrollTo('#contact')}
+                whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(255,101,0,0.45)' }}
+                whileTap={{ scale: 0.96 }}
+                className="bg-brand-accent text-brand-dark font-bold py-4 px-8 rounded-xl text-base shadow-lg shadow-brand-accent/25"
+              >
+                Trabajemos juntos
+              </motion.button>
+            </Magnet>
             <motion.button
               onClick={() => scrollTo('#projects')}
               whileHover={{ scale: 1.04, borderColor: 'rgba(255,101,0,0.4)' }}
